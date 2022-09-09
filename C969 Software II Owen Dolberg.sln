@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Owl Scheduler Desktop Edition", "Owl Scheduler Desktop Edition\Owl Scheduler Desktop Edition.csproj", "{661FE6DB-ECC8-483F-B6B1-DA0D650F6921}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwlSchedulerLibrary", "OwlSchedulerLibrary\OwlSchedulerLibrary.csproj", "{74B721DF-83C1-4159-9E9B-484817178981}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{661FE6DB-ECC8-483F-B6B1-DA0D650F6921}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{661FE6DB-ECC8-483F-B6B1-DA0D650F6921}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{661FE6DB-ECC8-483F-B6B1-DA0D650F6921}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{661FE6DB-ECC8-483F-B6B1-DA0D650F6921}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74B721DF-83C1-4159-9E9B-484817178981}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74B721DF-83C1-4159-9E9B-484817178981}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74B721DF-83C1-4159-9E9B-484817178981}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74B721DF-83C1-4159-9E9B-484817178981}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

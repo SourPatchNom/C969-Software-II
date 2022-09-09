@@ -1,0 +1,25 @@
+﻿<Window x:Class="Owl_Scheduler_Desktop_Edition.WindowUserLogin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:Owl_Scheduler_Desktop_Edition"
+        mc:Ignorable="d"
+        Title="WindowUserLogin" Height="300" Width="400" Closing="WindowUserLogin_OnClosing">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="150" />
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" x:Name="TitleLabel" Content="Please Login" Margin="10,0,10,0" FontWeight="Bold" HorizontalAlignment="Center"/>
+        <Label Grid.Row="1" x:Name="UsernameLabel" Content="Username:" Margin="10,5,10,0"/> 
+        <TextBox Grid.Row="2" x:Name="UsernameInput" Height="25" Margin="10,0,10,0"/>
+        <Label Grid.Row="3" x:Name="PasswordLabel" Content="Password:" Margin="10,5,10,0"/>
+        <TextBox Grid.Row="4" x:Name="PasswordInput" Height="25" Margin="10,0,10,0"/>
+        <Button Grid.Row="5" Margin="10,50,10,50" Content="Submit" Click="ButtonBase_OnClick"/>
+    </Grid>
+</Window>
