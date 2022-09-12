@@ -17,9 +17,9 @@
         </Grid.RowDefinitions>
         <Label Grid.Row="0" x:Name="TitleLabel" Content="Please Login" Margin="10,0,10,0" FontWeight="Bold" HorizontalAlignment="Center"/>
         <Label Grid.Row="1" x:Name="UsernameLabel" Content="Username:" Margin="10,5,10,0"/> 
-        <TextBox Grid.Row="2" x:Name="UsernameInput" Height="25" Margin="10,0,10,0"/>
+        <TextBox Grid.Row="2" x:Name="UsernameInput" VerticalContentAlignment="Center" Height="25" Margin="10,0,10,0"/>
         <Label Grid.Row="3" x:Name="PasswordLabel" Content="Password:" Margin="10,5,10,0"/>
-        <TextBox Grid.Row="4" x:Name="PasswordInput" Height="25" Margin="10,0,10,0"/>
+        <PasswordBox Grid.Row="4" x:Name="PasswordInput" VerticalContentAlignment="Center" Height="25" Margin="10,0,10,0"/>
         <Button Grid.Row="5" Margin="10,50,10,50" Content="Submit" Click="ButtonBase_OnClick"/>
     </Grid>
 </Window>

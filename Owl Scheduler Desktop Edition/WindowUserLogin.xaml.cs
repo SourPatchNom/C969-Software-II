@@ -13,6 +13,7 @@ namespace Owl_Scheduler_Desktop_Edition
         
         public WindowUserLogin()
         {
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
             CheckLocalization();
         }
@@ -24,7 +25,7 @@ namespace Owl_Scheduler_Desktop_Edition
                 //English
                 case "en-US":
                 case "en":
-                case { } a when a.Contains("en"):
+                case string a when a.Contains("en"):
                     TitleLabel.Content = "Please Login to Continue!";
                     UsernameLabel.Content = "Username";
                     PasswordLabel.Content = "Password";
@@ -34,7 +35,7 @@ namespace Owl_Scheduler_Desktop_Edition
                 //French
                 case "fr-FR":
                 case "fr":
-                case { } a when a.Contains("fr"):
+                case string a when a.Contains("fr"):
                     TitleLabel.Content = "Veuillez Vous Connecter";
                     UsernameLabel.Content = "Nom d'utilisateur";
                     PasswordLabel.Content = "Mot de passe";
@@ -44,7 +45,7 @@ namespace Owl_Scheduler_Desktop_Edition
                 //Spanish
                 case "es-ES":
                 case "es":
-                case { } a when a.Contains("es"):
+                case string a when a.Contains("es"):
                     TitleLabel.Content = "Por favor inicie sesión para continuar";
                     UsernameLabel.Content = "Nombre de usuario";
                     PasswordLabel.Content = "Clave";
@@ -64,7 +65,7 @@ namespace Owl_Scheduler_Desktop_Edition
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            if (SessionManager.Instance.ProcessLoginAttempt(UsernameInput.Text,PasswordInput.Text))
+            if (SessionManager.Instance.ProcessLoginAttempt(UsernameInput.Text,PasswordInput.Password))
             {
                 Hide();
                 return;

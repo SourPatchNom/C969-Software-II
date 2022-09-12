@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
+using OwlSchedulerLibrary.Classes;
+using OwlSchedulerLibrary.Database;
 
 namespace OwlSchedulerLibrary
 {
@@ -11,39 +13,30 @@ namespace OwlSchedulerLibrary
         
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private string _currentUser;
-        
-        private bool _isLoggedIn = false;
+        public bool IsLoggedIn { get; private set; } = false;
 
-        public bool IsLoggedIn
-        {
-            get { return _isLoggedIn; }
-        }
+        public string CurrentUser { get; private set; }
 
         public void Logout()
         {
-            _isLoggedIn = false;
+            IsLoggedIn = false;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("User Logged Out!"));
-            LogHandler.Instance.LogMessage("User Authentication", "User " + _currentUser + " logged out.");
+            LogHandler.Instance.LogMessage("User Authentication", "User " + CurrentUser + " logged out.");
         }
 
         public bool ProcessLoginAttempt(string username, string password)
         {
-            if (AuthenticateUser(username,password))
-            {
-                _isLoggedIn = true;
-                _currentUser = username;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("User " + _currentUser + " logged In!"));
-                return true;
-            }
-
-            return false;
+            if (!AuthenticateUser(username, password)) return false;
+            IsLoggedIn = true;
+            CurrentUser = username;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("User " + CurrentUser + " logged In!"));
+            return true;
         }
 
-        private bool AuthenticateUser(string u, string p)
+        private static bool AuthenticateUser(string u, string p)
         {
-            bool isGood = u == "test" && p == "test";
-            LogHandler.Instance.LogMessage("User Authentication", isGood ? "User " + u + " successfully logged in!": "Login Attempt Failed! Incorrect credentials given by " + u);
+            var isGood = DatabaseHandler.Instance.LoginUser(u, p);
+            LogHandler.Instance.LogMessage("User Authentication", isGood ? "User " + u + " successfully logged in!" : "Login Attempt Failed! Incorrect credentials given by " + u);
             return isGood;
         }
     }

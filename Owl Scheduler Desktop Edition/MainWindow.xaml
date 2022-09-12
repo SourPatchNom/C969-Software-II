@@ -5,10 +5,48 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Owl_Scheduler_Desktop_Edition"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Owl Scheduler Pro" Height="1080" Width="1924" FontSize="20">
     <Grid>
         <Grid x:Name="PrimaryGrid" Visibility="Visible">
-            <Calendar x:Name="LeftCalendar" DisplayMode="Month" Padding="0,10,0,0"></Calendar>    
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300px"/>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="300px" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Margin="10">
+                <Label Grid.Column="0" x:Name="LabelNow" HorizontalAlignment="Center" Content="NOW" Padding="10,10,0,10"/>
+                <Line Height="75"/>
+                <Label Content="Manage" HorizontalAlignment="Center" Padding="10"/>
+                <Button HorizontalAlignment="Center" Width="200" Height="50" Content="Edit Customers"  Padding="0,0,0,0" />
+                <Line Height="25" />
+                <Button HorizontalAlignment="Center" Width="200" Height="50" Content="Create Customer"  Padding="0,0,0,0" />
+                <Line Height="25" />
+                <Button HorizontalAlignment="Center" Width="200" Height="50" Content="Edit Appointments"  Padding="0,0,0,0" />
+                <Line Height="25" />
+                <Button HorizontalAlignment="Center" Width="200" Height="50" Content="Create Appointment"  Padding="0,0,0,0" />
+                <Line Height="25" />
+                <Label Content="View Mode" HorizontalAlignment="Center" Padding="10"/>
+                <Button HorizontalAlignment="Center" Width="200" Height="50" Content="View All"  Padding="0,0,0,0" />
+                <Line Height="25" />
+                <Button HorizontalAlignment="Center" Width="200" Height="50" Content="View Month"  Padding="0,0,0,0" />
+                <Line Height="25" />
+                <Button HorizontalAlignment="Center" Width="200" Height="50" Content="View Week"  Padding="0,0,0,0" />
+                <Line Height="25" />
+                <Label Content="Admin" HorizontalAlignment="Center" Padding="10"/>
+                <Button HorizontalAlignment="Center" Width="200" Height="50" Content="Settings"  Padding="0,0,0,0" />
+                <Line Height="25" />
+                <Button HorizontalAlignment="Center" Width="200" Height="50" Content="Log Out" Click="ButtonLogOut_OnClick" Padding="0,0,0,0" />
+            </StackPanel>
+            <StackPanel Grid.Column="1">
+                <Label Grid.Column="1" x:Name="LabelWelcome" HorizontalAlignment="Center" Content="Hello!" Padding="10,10,0,10"/>
+            </StackPanel>
+            <StackPanel Grid.Column="2" Margin="10">
+                <Label HorizontalAlignment="Center" Content="UPCOMING" Padding="10,10,0,10"/>
+                <Line Height="75" />
+                <DataGrid Height="800px" Padding="10"></DataGrid>
+                <Line Height="65" />
+                
+            </StackPanel>
         </Grid>
     </Grid>
 </Window>
