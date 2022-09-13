@@ -23,5 +23,11 @@ namespace Owl_Scheduler_Desktop_Edition
         {
             Hide();
         }
+
+        private void WindowAppointment_OnClosing(object sender, CancelEventArgs e)
+        {
+            e.Cancel = true;
+            Hide();
+        }
     }
 }

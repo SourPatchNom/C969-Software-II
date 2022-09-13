@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:Owl_Scheduler_Desktop_Edition"
         mc:Ignorable="d"
-        Title="WindowCustomer" Height="450" Width="800" Deactivated="WindowCustomer_OnDeactivated">
+        Title="WindowCustomer" Height="800" Width="1000" FontSize="20"  Deactivated="WindowCustomer_OnDeactivated" Closing="WindowCustomer_OnClosing">
     <Grid>
         
     </Grid>
