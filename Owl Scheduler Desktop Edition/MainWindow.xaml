@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Owl_Scheduler_Desktop_Edition"
         mc:Ignorable="d"
-        Title="Owl Scheduler Pro" Height="1080" Width="1924" FontSize="20">
+        Title="Owl Scheduler Pro" Height="1080" Width="1920" FontSize="20" Closing="MainWindow_OnClosing">
     <Grid>
         <Grid x:Name="PrimaryGrid" Visibility="Visible">
             <Grid.ColumnDefinitions>
@@ -17,33 +17,56 @@
                 <Label Grid.Column="0" x:Name="LabelNow" HorizontalAlignment="Center" Content="NOW" Padding="10,10,0,10"/>
                 <Line Height="75"/>
                 <Label Content="Manage" HorizontalAlignment="Center" Padding="10"/>
-                <Button HorizontalAlignment="Center" Width="200" Height="50" Content="Edit Customers"  Padding="0,0,0,0" />
+                <Button HorizontalAlignment="Center" Width="200" Height="50" Content="Customers" Click="ButtonCustomers_OnClick" Padding="0,0,0,0" />
                 <Line Height="25" />
-                <Button HorizontalAlignment="Center" Width="200" Height="50" Content="Create Customer"  Padding="0,0,0,0" />
-                <Line Height="25" />
-                <Button HorizontalAlignment="Center" Width="200" Height="50" Content="Edit Appointments"  Padding="0,0,0,0" />
-                <Line Height="25" />
-                <Button HorizontalAlignment="Center" Width="200" Height="50" Content="Create Appointment"  Padding="0,0,0,0" />
-                <Line Height="25" />
+                <Button HorizontalAlignment="Center" Width="200" Height="50" Content="Appointments" Click="ButtonAppointments_OnClick" Padding="0,0,0,0" />
+                <Line Height="50" />
                 <Label Content="View Mode" HorizontalAlignment="Center" Padding="10"/>
-                <Button HorizontalAlignment="Center" Width="200" Height="50" Content="View All"  Padding="0,0,0,0" />
+                <Button HorizontalAlignment="Center" Width="200" Height="50" Content="View All" Click="ButtonViewAll_OnClick" Padding="0,0,0,0" />
                 <Line Height="25" />
-                <Button HorizontalAlignment="Center" Width="200" Height="50" Content="View Month"  Padding="0,0,0,0" />
+                <Button HorizontalAlignment="Center" Width="200" Height="50" Content="View Month" Click="ButtonViewByMonth_OnClick" Padding="0,0,0,0" />
                 <Line Height="25" />
-                <Button HorizontalAlignment="Center" Width="200" Height="50" Content="View Week"  Padding="0,0,0,0" />
-                <Line Height="25" />
+                <Button HorizontalAlignment="Center" Width="200" Height="50" Content="View Week" Click="ButtonViewByWeek_OnClick" Padding="0,0,0,0" />
+                <Line Height="50" />
                 <Label Content="Admin" HorizontalAlignment="Center" Padding="10"/>
-                <Button HorizontalAlignment="Center" Width="200" Height="50" Content="Settings"  Padding="0,0,0,0" />
+                <Button HorizontalAlignment="Center" Width="200" Height="50" Content="Settings" Click="ButtonSettings_OnClick" Padding="0,0,0,0" />
                 <Line Height="25" />
                 <Button HorizontalAlignment="Center" Width="200" Height="50" Content="Log Out" Click="ButtonLogOut_OnClick" Padding="0,0,0,0" />
             </StackPanel>
             <StackPanel Grid.Column="1">
                 <Label Grid.Column="1" x:Name="LabelWelcome" HorizontalAlignment="Center" Content="Hello!" Padding="10,10,0,10"/>
+                <Line Height="5" />
+                <Label Grid.Column="1" x:Name="LabelViewMode" HorizontalAlignment="Center" Content="All Your Appointments" Padding="10,10,0,10"/>
+                <Line Height="10" />
+                <Grid x:Name="AllView" Visibility="Visible">
+                    <ListView x:Name="AppointmentsAll" Height="800px">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Begins" DisplayMemberBinding="{Binding Path=StartDateTime, StringFormat='g'}" Width="260px" ></GridViewColumn>
+                                <GridViewColumn Header="Ends" DisplayMemberBinding="{Binding Path=EndDateTime, StringFormat='g'}" Width="260px"></GridViewColumn>
+                                <GridViewColumn Header="Title" DisplayMemberBinding="{Binding Path=Title}" Width="260px"></GridViewColumn>
+                                <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Path=Description}" Width="260px"></GridViewColumn>
+                                <GridViewColumn Header="Location" DisplayMemberBinding="{Binding Path=Location}" Width="260px"></GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
             </StackPanel>
             <StackPanel Grid.Column="2" Margin="10">
-                <Label HorizontalAlignment="Center" Content="UPCOMING" Padding="10,10,0,10"/>
-                <Line Height="75" />
-                <DataGrid Height="800px" Padding="10"></DataGrid>
+                <Label x:Name="LabelNextApptTime" HorizontalAlignment="Center" Content="Next Appointment:" Padding="10,10,0,10"/>
+                <Line Height="10" />
+                <Label HorizontalAlignment="Center" Content="Today's Appointments" Padding="10,10,0,10"/>
+                <Line Height="10" />
+                <Grid>
+                    <ListView x:Name="TodayDataGrid" Height="800px" Padding="10">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Start" DisplayMemberBinding="{Binding Path=StartDateTime, StringFormat='h:mm tt'}" Width="100px" />
+                                <GridViewColumn Header="Title" DisplayMemberBinding="{Binding Path=Title}" Width="150px" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
                 <Line Height="65" />
                 
             </StackPanel>

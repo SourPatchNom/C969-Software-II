@@ -2,6 +2,8 @@
 using System.Globalization;
 using System.Windows;
 using OwlSchedulerLibrary;
+using OwlSchedulerLibrary.OwlSchedule;
+using OwlSchedulerLibrary.OwlSchedule.Classes;
 
 namespace Owl_Scheduler_Desktop_Edition
 {
@@ -57,7 +59,7 @@ namespace Owl_Scheduler_Desktop_Edition
 
         private void WindowUserLogin_OnClosing(object sender, CancelEventArgs e)
         {
-            if (!SessionManager.Instance.IsLoggedIn || _attempts >= 10)
+            if (!CurrentSession.Instance.IsLoggedIn || _attempts >= 10)
             {
                 Application.Current.Shutdown();
             }
@@ -65,7 +67,7 @@ namespace Owl_Scheduler_Desktop_Edition
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            if (SessionManager.Instance.ProcessLoginAttempt(UsernameInput.Text,PasswordInput.Password))
+            if (CurrentSession.Instance.ProcessLoginAttempt(UsernameInput.Text,PasswordInput.Password))
             {
                 Hide();
                 return;

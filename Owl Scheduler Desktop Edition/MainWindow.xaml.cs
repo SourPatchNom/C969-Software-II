@@ -1,11 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using OwlSchedulerLibrary;
+using OwlSchedulerLibrary.Classes;
 using OwlSchedulerLibrary.Database;
+using OwlSchedulerLibrary.Database.Classes;
+using OwlSchedulerLibrary.OwlLogger;
+using OwlSchedulerLibrary.OwlSchedule;
+using OwlSchedulerLibrary.OwlSchedule.Classes;
 
 namespace Owl_Scheduler_Desktop_Edition
 {
@@ -15,17 +22,22 @@ namespace Owl_Scheduler_Desktop_Edition
     /// </summary>
     public partial class MainWindow
     {
+        private readonly WindowCustomer _windowCustomer = new WindowCustomer();
+        private readonly WindowAppointment _windowAppointment = new WindowAppointment();
         private readonly WindowUserLogin _windowUserLogin = new WindowUserLogin();
         private readonly DispatcherTimer _timer = new DispatcherTimer();
+        private bool _nextTimerAlert = true;
         
-        
+        //private List<Appointment> AppointmentsAll => OwlScheduler.Instance.CurrentUserAppointmentsMaster;
+
         public MainWindow()
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
-            LogHandler.Instance.LogMessage("Main Window", "Initialized.");
+            LogHandler.LogMessage("Main Window", "Initialized.");
             OwlScheduler.Instance.Initialize();
-            
+            AppointmentsAll.ItemsSource = OwlScheduler.Instance.AppointmentModel.CurrentUserAppointmentsMaster;
+            TodayDataGrid.ItemsSource = OwlScheduler.Instance.AppointmentModel.CurrentUserAppointmentsDay;
             _timer.Tick += OnTickTimeUpdate;
             _timer.Interval = new TimeSpan(0, 0, 1);
             _timer.Start();
@@ -39,25 +51,30 @@ namespace Owl_Scheduler_Desktop_Edition
                     Application.Current.Shutdown();
                 }        
             }
-            SessionManager.Instance.PropertyChanged += LoginOnPropertyChanged;
+            
+            CurrentSession.Instance.PropertyChanged += LoginOnPropertyChanged;
             //TODO enable for release!
             // Hide();
             // _windowUserLogin.Show();
             // _windowUserLogin.Activate();
 
             
-            SessionManager.Instance.ProcessLoginAttempt("test", "test");
+            CurrentSession.Instance.ProcessLoginAttempt("test", "test");
+            
+            
         }
 
         private void LoginOnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             _windowUserLogin.UsernameInput.Clear();
             _windowUserLogin.PasswordInput.Clear();
-            if (SessionManager.Instance.IsLoggedIn)
+            _nextTimerAlert = true;
+            AppointmentsAll.ItemsSource = OwlScheduler.Instance.AppointmentModel.CurrentUserAppointmentsMaster;
+            LabelViewMode.Content = "All Your Appointments!";
+            if (CurrentSession.Instance.IsLoggedIn)
             {
-                
                 Show();
-                LabelWelcome.Content = "Hello " + SessionManager.Instance.CurrentUser;
+                LabelWelcome.Content = "Hello " + CurrentSession.Instance.CurrentUser?.UserName;
                 return;
             }
             Hide();
@@ -66,14 +83,75 @@ namespace Owl_Scheduler_Desktop_Edition
         private void OnTickTimeUpdate(object source, EventArgs e)
         {
             LabelNow.Content = DateTime.Now.ToString("G");
+
+            if (OwlScheduler.Instance.AppointmentModel.CurrentNextAppointment == null)
+            {
+                LabelNextApptTime.Content = " ";
+                return;
+            }
+
+            var timeTillNext = OwlScheduler.Instance.AppointmentModel.CurrentNextAppointment.StartDateTime - DateTime.Now;
+
+            if (timeTillNext.TotalSeconds < 0)
+            {
+                OwlScheduler.Instance.AppointmentModel.UpdateNowAndNext();
+                _nextTimerAlert = true;
+                return;
+            }
+            
+            if (timeTillNext.TotalMinutes < 15 && _nextTimerAlert)
+            {
+                MessageBox.Show("You have an appointment in the next 15 minutes!", "Reminder!", MessageBoxButton.OK, MessageBoxImage.Information);
+                _nextTimerAlert = false;
+            }
+            LabelNextApptTime.Content = "Next appointment in: " + timeTillNext.ToString(@"h\:mm\:ss");
         }
 
         private void ButtonLogOut_OnClick(object sender, RoutedEventArgs e)
         {
-            SessionManager.Instance.Logout();
+            CurrentSession.Instance.Logout();
             Hide();
             _windowUserLogin.Show();
             _windowUserLogin.Activate();
+        }
+
+        private void ButtonViewAll_OnClick(object sender, RoutedEventArgs e)
+        {
+            AppointmentsAll.ItemsSource = OwlScheduler.Instance.AppointmentModel.CurrentUserAppointmentsMaster;
+            LabelViewMode.Content = "All Your Appointments!";
+        }
+
+        private void ButtonViewByMonth_OnClick(object sender, RoutedEventArgs e)
+        {
+            AppointmentsAll.ItemsSource = OwlScheduler.Instance.AppointmentModel.CurrentUserAppointmentsMonth;
+            LabelViewMode.Content = "Your Appointments This Month!";
+        }
+
+        private void ButtonViewByWeek_OnClick(object sender, RoutedEventArgs e)
+        {
+            AppointmentsAll.ItemsSource = OwlScheduler.Instance.AppointmentModel.CurrentUserAppointmentsWeek;
+            LabelViewMode.Content = "Your Appointments This Week!";
+        }
+
+        private void ButtonSettings_OnClick(object sender, RoutedEventArgs e)
+        {
+            DatabaseHandler.Instance.InsertAppointment(new Appointment(-1,1,1,"Button","This is a test generated appt","Home","Bob","In Person","",DateTime.UtcNow.Add(new TimeSpan(0,2,2)), DateTime.UtcNow.Add(new TimeSpan(0,22,2)), DateTime.UtcNow, "Admin", DateTime.UtcNow, "Admin"));
+            //DatabaseHandler.Instance.RefreshAppointments();
+        }
+
+        private void MainWindow_OnClosing(object sender, CancelEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void ButtonCustomers_OnClick(object sender, RoutedEventArgs e)
+        {
+            _windowCustomer.Show();
+        }
+
+        private void ButtonAppointments_OnClick(object sender, RoutedEventArgs e)
+        {
+            _windowAppointment.Show();
         }
     }
 }

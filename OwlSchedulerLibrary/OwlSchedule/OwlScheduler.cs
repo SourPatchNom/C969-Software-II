@@ -1,33 +1,37 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Runtime.Remoting.Messaging;
+using OwlSchedulerLibrary.Database;
+using OwlSchedulerLibrary.OwlLogger;
+using OwlSchedulerLibrary.OwlSchedule.Classes;
 
-namespace OwlSchedulerLibrary
+namespace OwlSchedulerLibrary.OwlSchedule
 {
-    public class OwlScheduler
+    public sealed class OwlScheduler
     {
         private static readonly Lazy<OwlScheduler> LazySingleton = new Lazy<OwlScheduler>(() => new OwlScheduler());
 
         public static OwlScheduler Instance => LazySingleton.Value;
-
+        
+        public AppointmentModel AppointmentModel { get; private set; } = new AppointmentModel();
+        
         private OwlScheduler()
         {
-            
+            DatabaseHandler.Instance.DatabaseInformationUpdated += AppointmentModel.UpdateAppointmentsLists;
         }
 
         public void Initialize()
         {
-            LogHandler.Instance.LogMessage("OwlScheduler", "Initializing.");
-            SessionManager.Instance.PropertyChanged += HandleLogin;
+            LogHandler.LogMessage("OwlScheduler", "Initializing.");
+            CurrentSession.Instance.PropertyChanged += HandleLogin;
 
-            LogHandler.Instance.LogMessage("OwlScheduler", "Initialized, waiting for user login.");
+            LogHandler.LogMessage("OwlScheduler", "Initialized, waiting for user login.");
         }
 
         private void HandleLogin(object o,PropertyChangedEventArgs e)
         {
-            if (SessionManager.Instance.IsLoggedIn)
+            if (CurrentSession.Instance.IsLoggedIn)
             {
-                LogHandler.Instance.LogMessage("OwlScheduler", "User login updated, attempting to access database!");
+                LogHandler.LogMessage("OwlScheduler", "User login updated, attempting to access database!");
                 DatabaseInitialize();
                 return;
             }
@@ -35,12 +39,13 @@ namespace OwlSchedulerLibrary
             ClearDatabaseInformation();
         }
 
+        
         /// <summary>
         /// Intended to clear the class data of all information for a logout.
         /// </summary>
         private void ClearDatabaseInformation()
         {
-            
+            DatabaseHandler.Instance.ClearLocalData();
         }
 
         /// <summary>
@@ -48,7 +53,7 @@ namespace OwlSchedulerLibrary
         /// </summary>
         private void DatabaseInitialize()
         {
-            
+            DatabaseHandler.Instance.SyncFromDatabase();
         }
     }
 }

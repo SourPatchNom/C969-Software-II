@@ -1,14 +1,13 @@
 ﻿using System;
 using System.IO;
 
-namespace OwlSchedulerLibrary
+namespace OwlSchedulerLibrary.OwlLogger
 {
     public sealed class LogHandler
     {
         private static readonly Lazy<LogHandler> LazySingleton = new Lazy<LogHandler>(() => new LogHandler());
 
         public static LogHandler Instance => LazySingleton.Value;
-
 
         private const string LogDirectory = @"log";
         private const string LogMaster = @"log/log.txt";
@@ -39,11 +38,11 @@ namespace OwlSchedulerLibrary
             }
         }
 
-        public void LogMessage(string sourcer, string messageToLog)
+        public static void LogMessage(string source, string messageToLog)
         {
             using (var writer = File.AppendText(LogMaster))
             {
-                writer.WriteLine(DateTime.Now + ":" + sourcer +": "+ messageToLog);
+                writer.WriteLine(DateTime.Now + ":" + source +": "+ messageToLog);
                 writer.Close();
             }
         }   

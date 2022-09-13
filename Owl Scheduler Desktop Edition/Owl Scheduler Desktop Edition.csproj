@@ -96,6 +96,12 @@
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
         </ApplicationDefinition>
+        <Compile Include="WindowAppointment.xaml.cs">
+          <DependentUpon>WindowAppointment.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="WindowCustomer.xaml.cs">
+          <DependentUpon>WindowCustomer.xaml</DependentUpon>
+        </Compile>
         <Compile Include="WindowUserLogin.xaml.cs">
           <DependentUpon>WindowUserLogin.xaml</DependentUpon>
         </Compile>
@@ -111,6 +117,8 @@
             <DependentUpon>MainWindow.xaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
+        <Page Include="WindowAppointment.xaml" />
+        <Page Include="WindowCustomer.xaml" />
         <Page Include="WindowUserLogin.xaml" />
     </ItemGroup>
     <ItemGroup>

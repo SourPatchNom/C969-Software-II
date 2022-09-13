@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OwlSchedulerLibrary.Classes
+namespace OwlSchedulerLibrary.Database.Classes
 {
     public class Appointment
     {
@@ -38,5 +38,6 @@ namespace OwlSchedulerLibrary.Classes
             LastUpdateDateTime = lastUpdateDateTime;
             LastUpdateBy = lastUpdateBy;
         }
+        
     }
 }
