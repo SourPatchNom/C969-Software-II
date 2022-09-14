@@ -96,11 +96,20 @@
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
         </ApplicationDefinition>
+        <Compile Include="ManageCustomerWindows\ManageAddressWindow.xaml.cs">
+          <DependentUpon>ManageAddressWindow.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="ManageCustomerWindows\ManageCityWindow.xaml.cs">
+          <DependentUpon>ManageCityWindow.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="ManageCustomerWindows\ManageCountryWindow.xaml.cs">
+          <DependentUpon>ManageCountryWindow.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="ManageCustomerWindows\ManageCustomerWindow.xaml.cs">
+          <DependentUpon>ManageCustomerWindow.xaml</DependentUpon>
+        </Compile>
         <Compile Include="WindowAppointment.xaml.cs">
           <DependentUpon>WindowAppointment.xaml</DependentUpon>
-        </Compile>
-        <Compile Include="WindowCustomer.xaml.cs">
-          <DependentUpon>WindowCustomer.xaml</DependentUpon>
         </Compile>
         <Compile Include="WindowUserLogin.xaml.cs">
           <DependentUpon>WindowUserLogin.xaml</DependentUpon>
@@ -117,8 +126,11 @@
             <DependentUpon>MainWindow.xaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
+        <Page Include="ManageCustomerWindows\ManageAddressWindow.xaml" />
+        <Page Include="ManageCustomerWindows\ManageCityWindow.xaml" />
+        <Page Include="ManageCustomerWindows\ManageCountryWindow.xaml" />
+        <Page Include="ManageCustomerWindows\ManageCustomerWindow.xaml" />
         <Page Include="WindowAppointment.xaml" />
-        <Page Include="WindowCustomer.xaml" />
         <Page Include="WindowUserLogin.xaml" />
     </ItemGroup>
     <ItemGroup>

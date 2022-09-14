@@ -24,5 +24,10 @@ namespace OwlSchedulerLibrary.Classes
             LastUpdateDateTime = lastUpdateDateTime;
             LastUpdateBy = lastUpdateBy;
         }
+
+        public void UpdateAddress(int newAddressId)
+        {
+            CustomerAddress = newAddressId;
+        }
     }
 }

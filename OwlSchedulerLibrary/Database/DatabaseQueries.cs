@@ -21,7 +21,7 @@ namespace OwlSchedulerLibrary.Database
                                   "VALUES (@AddressOne, @AddressTwo, @AddressCity, @AddressPostal, @AddressPhone, @AddressCreated, @AddressCreatedUser, @AddressLastUpdate, @AddressLastUpdateUser)";
             command.Parameters.AddWithValue("@AddressOne", targetAddress.AddressOne);
             command.Parameters.AddWithValue("@AddressTwo", targetAddress.AddressTwo);
-            command.Parameters.AddWithValue("@AddressCity", targetAddress.City);
+            command.Parameters.AddWithValue("@AddressCity", targetAddress.CityId);
             command.Parameters.AddWithValue("@AddressPostal", targetAddress.PostalCode);
             command.Parameters.AddWithValue("@AddressPhone", targetAddress.PhoneNumber);
             command.Parameters.AddWithValue("@AddressCreated", targetAddress.CreateDateTime.ToUniversalTime());
@@ -128,7 +128,7 @@ namespace OwlSchedulerLibrary.Database
             command.Parameters.AddWithValue("@AddressId", targetAddress.AddressId);
             command.Parameters.AddWithValue("@AddressOne", targetAddress.AddressOne);
             command.Parameters.AddWithValue("@AddressTwo", targetAddress.AddressTwo);
-            command.Parameters.AddWithValue("@AddressCity", targetAddress.City);
+            command.Parameters.AddWithValue("@AddressCity", targetAddress.CityId);
             command.Parameters.AddWithValue("@AddressPostal", targetAddress.PostalCode);
             command.Parameters.AddWithValue("@AddressPhone", targetAddress.PhoneNumber);
             command.Parameters.AddWithValue("@AddressLastUpdate", targetAddress.LastUpdateDateTime.ToUniversalTime());
@@ -145,7 +145,7 @@ namespace OwlSchedulerLibrary.Database
         public static MySqlCommand GetUpdateAppointmentCommand(MySqlCommand command, Appointment targetAppointment)
         {
             command.CommandText = "UPDATE appointment SET customerId=@CustomerId,userId=@UserId,title=@Title,description=@Description,location=@Location,contact=@Contact," +
-                                  "type=@Type,url=@Url,start=@Start,end=@end,createdate=@CreateDate,createdBy=@CreatedBy,lastUpdate=@LastUpdate,lastUpdateBy=@LastUpdateUser WHERE appointmentId=@AppointmentId";
+                                  "type=@Type,url=@Url,start=@Start,end=@end,lastUpdate=@LastUpdate,lastUpdateBy=@LastUpdateUser WHERE appointmentId=@AppointmentId";
             command.Parameters.AddWithValue("@AppointmentId", targetAppointment.AppointmentId);
             command.Parameters.AddWithValue("@CustomerId", targetAppointment.CustomerId);
             command.Parameters.AddWithValue("@UserId", targetAppointment.UserId);
@@ -157,8 +157,6 @@ namespace OwlSchedulerLibrary.Database
             command.Parameters.AddWithValue("@Url", targetAppointment.Url);
             command.Parameters.AddWithValue("@Start", targetAppointment.StartDateTime.ToUniversalTime());
             command.Parameters.AddWithValue("@End", targetAppointment.EndDateTime.ToUniversalTime());
-            command.Parameters.AddWithValue("@CreateDate", targetAppointment.CreateDateTime.ToUniversalTime());
-            command.Parameters.AddWithValue("@CreatedBy", targetAppointment.CreateBy);
             command.Parameters.AddWithValue("@LastUpdate", targetAppointment.LastUpdateDateTime.ToUniversalTime());
             command.Parameters.AddWithValue("@LastUpdateUser", targetAppointment.LastUpdateBy);
             return command;
@@ -172,12 +170,10 @@ namespace OwlSchedulerLibrary.Database
         /// <returns>Formatted MySqlCommand object.</returns>
         public static MySqlCommand GetUpdateCityCommand(MySqlCommand command, City targetCity)
         {
-            command.CommandText = "UPDATE city SET city=@Name, countryId=@Country, createDate=@CreateDate, createdBy=@CreatedBy, lastUpdate=@LastUpdate, lastUpdateBy=@LastUpdateUser WHERE cityId=@Id";
+            command.CommandText = "UPDATE city SET city=@Name, countryId=@Country, lastUpdate=@LastUpdate, lastUpdateBy=@LastUpdateUser WHERE cityId=@Id";
             command.Parameters.AddWithValue("@Id", targetCity.CityId);
             command.Parameters.AddWithValue("@Name", targetCity.CityName);
             command.Parameters.AddWithValue("@Country", targetCity.Country);
-            command.Parameters.AddWithValue("@CreateDate", targetCity.CreateDateTime.ToUniversalTime());
-            command.Parameters.AddWithValue("@CreatedBy", targetCity.CreateBy);
             command.Parameters.AddWithValue("@LastUpdate", targetCity.LastUpdateDateTime.ToUniversalTime());
             command.Parameters.AddWithValue("@LastUpdateUser", targetCity.LastUpdateBy);
             return command;
@@ -191,11 +187,9 @@ namespace OwlSchedulerLibrary.Database
         /// <returns>Formatted MySqlCommand object.</returns>
         public static MySqlCommand GetUpdateCountryCommand(MySqlCommand command, Country targetCountry)
         {
-            command.CommandText = "UPDATE country SET country=@Name, createDate=@CreateDate, createdBy=@CreatedBy, lastUpdate=@LastUpdate, lastUpdateBy=@LastUpdateUser WHERE countryId=@CountryId";
+            command.CommandText = "UPDATE country SET country=@Name, lastUpdate=@LastUpdate, lastUpdateBy=@LastUpdateUser WHERE countryId=@CountryId";
             command.Parameters.AddWithValue("@CountryId", targetCountry.CountryId);
             command.Parameters.AddWithValue("@Name", targetCountry.CountryName);
-            command.Parameters.AddWithValue("@Created", targetCountry.CreateDateTime.ToUniversalTime());
-            command.Parameters.AddWithValue("@CreatedBy", targetCountry.CreateBy);
             command.Parameters.AddWithValue("@LastUpdate", targetCountry.LastUpdateDateTime.ToUniversalTime());
             command.Parameters.AddWithValue("@LastUpdateBy", targetCountry.LastUpdateBy);
             return command;
@@ -209,15 +203,13 @@ namespace OwlSchedulerLibrary.Database
         /// <returns>Formatted MySqlCommand object.</returns>
         public static MySqlCommand GetUpdateCustomerCommand(MySqlCommand command, Customer targetCustomer)
         {
-            command.CommandText = "UPDATE customer SET customerName=@Name, addressId=@Address,active=@Active, createDate=@CreateDate, createdBy=@CreatedBy, lastUpdate=@LastUpdate, lastUpdateBy=@LastUpdateUser WHERE customerId=@CustomerId";
+            command.CommandText = "UPDATE customer SET customerName=@Name, addressId=@Address,active=@Active, lastUpdate=@LastUpdate, lastUpdateBy=@LastUpdateUser WHERE customerId=@CustomerId";
             command.Parameters.AddWithValue("@CustomerId", targetCustomer.CustomerId);
             command.Parameters.AddWithValue("@Name", targetCustomer.CustomerName);
             command.Parameters.AddWithValue("@Address", targetCustomer.CustomerAddress);
             command.Parameters.AddWithValue("@Active", targetCustomer.Active ? 1 : 0);
-            command.Parameters.AddWithValue("@Created", targetCustomer.CreateDateTime.ToUniversalTime());
-            command.Parameters.AddWithValue("@CreatedBy", targetCustomer.CreateBy);
             command.Parameters.AddWithValue("@LastUpdate", targetCustomer.LastUpdateDateTime.ToUniversalTime());
-            command.Parameters.AddWithValue("@LastUpdateBy", targetCustomer.LastUpdateBy);
+            command.Parameters.AddWithValue("@LastUpdateUser", targetCustomer.LastUpdateBy);
             return command;
         }
         

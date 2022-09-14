@@ -93,9 +93,13 @@
         <Compile Include="Database\DatabaseDebug.cs" />
         <Compile Include="Database\DatabaseHandler.cs" />
         <Compile Include="Database\DatabaseQueries.cs" />
+        <Compile Include="Database\Extensions\ExistingRecordChecker.cs" />
         <Compile Include="Database\Extensions\TimeZoneConvert.cs" />
         <Compile Include="OwlLogger\LogHandler.cs" />
         <Compile Include="OwlSchedule\Classes\AppointmentModel.cs" />
+        <Compile Include="OwlSchedule\Classes\CustomerEditorFormatCheck.cs" />
+        <Compile Include="OwlSchedule\Classes\CustomerEditorModel.cs" />
+        <Compile Include="OwlSchedule\Classes\CustomerEditorSave.cs" />
         <Compile Include="OwlSchedule\CurrentSession.cs" />
         <Compile Include="OwlSchedule\OwlScheduler.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />

@@ -14,7 +14,6 @@ namespace OwlSchedulerLibrary.OwlSchedule.Classes
         public AppointmentModel()
         {
             _selectedWeek = _calendar.GetWeekOfYear(DateTime.UtcNow,CalendarWeekRule.FirstDay,DayOfWeek.Sunday);
-            DatabaseHandler.Instance.DatabaseInformationUpdated += UpdateAppointmentsLists;
         }
         
         private readonly Calendar _calendar = new GregorianCalendar();

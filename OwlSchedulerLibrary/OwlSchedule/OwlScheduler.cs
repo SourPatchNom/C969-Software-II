@@ -13,10 +13,12 @@ namespace OwlSchedulerLibrary.OwlSchedule
         public static OwlScheduler Instance => LazySingleton.Value;
         
         public AppointmentModel AppointmentModel { get; private set; } = new AppointmentModel();
+        public CustomerEditorModel CustomerEditorModel { get; private set; } = new CustomerEditorModel();
         
         private OwlScheduler()
         {
             DatabaseHandler.Instance.DatabaseInformationUpdated += AppointmentModel.UpdateAppointmentsLists;
+            DatabaseHandler.Instance.DatabaseInformationUpdated += CustomerEditorModel.UpdateAppointmentsLists;
         }
 
         public void Initialize()

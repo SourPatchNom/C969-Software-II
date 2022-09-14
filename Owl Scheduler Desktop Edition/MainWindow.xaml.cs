@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
+using Owl_Scheduler_Desktop_Edition.ManageCustomerWindows;
 using OwlSchedulerLibrary;
 using OwlSchedulerLibrary.Classes;
 using OwlSchedulerLibrary.Database;
@@ -22,7 +23,7 @@ namespace Owl_Scheduler_Desktop_Edition
     /// </summary>
     public partial class MainWindow
     {
-        private readonly WindowCustomer _windowCustomer = new WindowCustomer();
+        private readonly ManageCustomerWindow _manageCustomerWindow = new ManageCustomerWindow();
         private readonly WindowAppointment _windowAppointment = new WindowAppointment();
         private readonly WindowUserLogin _windowUserLogin = new WindowUserLogin();
         private readonly DispatcherTimer _timer = new DispatcherTimer();
@@ -101,7 +102,7 @@ namespace Owl_Scheduler_Desktop_Edition
             
             if (timeTillNext.TotalMinutes < 15 && _nextTimerAlert)
             {
-                MessageBox.Show("You have an appointment in the next 15 minutes!", "Reminder!", MessageBoxButton.OK, MessageBoxImage.Information);
+                if (Application.Current.MainWindow != null) MessageBox.Show(Application.Current.MainWindow, "You have an appointment in the next 15 minutes!", "Reminder!", MessageBoxButton.OK, MessageBoxImage.Information);
                 _nextTimerAlert = false;
             }
             LabelNextApptTime.Content = "Next appointment in: " + timeTillNext.ToString(@"h\:mm\:ss");
@@ -146,7 +147,7 @@ namespace Owl_Scheduler_Desktop_Edition
 
         private void ButtonCustomers_OnClick(object sender, RoutedEventArgs e)
         {
-            _windowCustomer.Show();
+            _manageCustomerWindow.Show();
         }
 
         private void ButtonAppointments_OnClick(object sender, RoutedEventArgs e)
