@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Input;
-using Org.BouncyCastle.Pkix;
 using OwlSchedulerLibrary.OwlSchedule;
 using OwlSchedulerLibrary.OwlSchedule.Classes;
 using OwlSchedulerLibrary.OwlSchedule.Helpers;
@@ -15,7 +11,7 @@ namespace Owl_Scheduler_Desktop_Edition.ManageAppointmentWindows
 {
     public partial class ManageAppointmentWindow : Window
     {
-        private bool _editMode = false;
+        private bool _editMode;
         
         public ManageAppointmentWindow()
         {
@@ -60,7 +56,7 @@ namespace Owl_Scheduler_Desktop_Edition.ManageAppointmentWindows
             bool saved = OwlSchedulerLibrary.OwlSchedule.DataModel.AppointmentDataModify.SaveAppointment(new Appointment(_editMode ? (((Appointment)ComboAppointmentPicker.SelectedItem).AppointmentId) : -1,
                 ((Customer)ComboCustomerPicker.SelectedItem).CustomerId, CurrentSession.Instance.CurrentUser.UserId, TextBoxTitle.Text, TextBoxDescription.Text, TextBoxLocation.Text,
                 TextBoxContact.Text, TextBoxType.Text, TextBoxUrl.Text, start, end, DateTime.Now, CurrentSession.Instance.CurrentUser.UserName, DateTime.Now, CurrentSession.Instance.CurrentUser.UserName), out string result);
-            MessageBox.Show(saved ?)
+            MessageBox.Show(saved ? "Saved!" : "Unable to save!\n" + result, "Save Appointment", MessageBoxButton.OK, saved ? MessageBoxImage.Information : MessageBoxImage.Error);
         }
 
         private void CancelButton_OnClick(object sender, RoutedEventArgs e)
