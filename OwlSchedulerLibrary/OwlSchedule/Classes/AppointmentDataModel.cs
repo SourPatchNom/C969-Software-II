@@ -8,10 +8,10 @@ using OwlSchedulerLibrary.Database.Classes;
 
 namespace OwlSchedulerLibrary.OwlSchedule.Classes
 {
-    public class AppointmentModel
+    public class AppointmentDataModel
     {
 
-        public AppointmentModel()
+        public AppointmentDataModel()
         {
             _selectedWeek = _calendar.GetWeekOfYear(DateTime.UtcNow,CalendarWeekRule.FirstDay,DayOfWeek.Sunday);
         }
@@ -23,16 +23,15 @@ namespace OwlSchedulerLibrary.OwlSchedule.Classes
         private int _selectedYearWeekView = DateTime.UtcNow.Year; //This Year
         private int _selectedWeek;
         
-        public BindingList<Appointment>  CurrentUserAppointmentsMaster = new BindingList<Appointment> ();
-        public BindingList<Appointment> CurrentUserAppointmentsMonth = new BindingList<Appointment> ();
-        public BindingList<Appointment>  CurrentUserAppointmentsWeek = new BindingList<Appointment> ();
-        public BindingList<Appointment>  CurrentUserAppointmentsDay = new BindingList<Appointment> ();
-        public Appointment CurrentViewAppointment = null;
+        public readonly BindingList<Appointment>  CurrentUserAppointmentsMaster = new BindingList<Appointment> ();
+        public readonly BindingList<Appointment> CurrentUserAppointmentsMonth = new BindingList<Appointment> ();
+        public readonly BindingList<Appointment>  CurrentUserAppointmentsWeek = new BindingList<Appointment> ();
+        public readonly BindingList<Appointment>  CurrentUserAppointmentsDay = new BindingList<Appointment> ();
         public Appointment CurrentAppointment = null;
         public Appointment CurrentNextAppointment = null;
         
         
-        public void UpdateAppointmentsLists(object sender, PropertyChangedEventArgs e)
+        public void UpdateAppointmentData(object sender, PropertyChangedEventArgs e)
         {
             UpdateListMaster();
             UpdateListMonth();
@@ -72,6 +71,11 @@ namespace OwlSchedulerLibrary.OwlSchedule.Classes
             CurrentNextAppointment = CurrentUserAppointmentsDay.FirstOrDefault(x => x.StartDateTime > DateTime.Now);
         }
         
+        /// <summary>
+        /// For viewing based on selected Month.
+        /// </summary>
+        /// <param name="month"></param>
+        /// <param name="year"></param>
         public void UpdateMonthView(int month, int year)
         {
             _selectedMonth = month;
@@ -79,16 +83,16 @@ namespace OwlSchedulerLibrary.OwlSchedule.Classes
             UpdateListMonth();
         }
         
+        /// <summary>
+        /// For viewing based on selected week.
+        /// </summary>
+        /// <param name="week"></param>
+        /// <param name="year"></param>
         public void UpdateWeekView(int week, int year)
         {
             _selectedWeek = week;
             _selectedYearWeekView = year;
             UpdateListWeek();
-        }
-
-        public void UpdateCurrentAppointment(int newAppointment)
-        {
-            CurrentViewAppointment = DatabaseHandler.Instance.Appointments[newAppointment];
         }
     }
 }

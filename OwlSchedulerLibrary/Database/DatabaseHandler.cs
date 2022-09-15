@@ -206,7 +206,7 @@ namespace OwlSchedulerLibrary.Database
             CloseConnectionIfOpen();
         }
 
-        public void RefreshCountries()
+        private void RefreshCountries()
         {
             Countries.Clear();
             if (!CheckOrOpenConnection()) throw new Exception("Connection Error");
@@ -225,7 +225,7 @@ namespace OwlSchedulerLibrary.Database
             DatabaseInformationUpdated?.Invoke(this, new PropertyChangedEventArgs("Countries Updated!"));
         }
 
-        public void RefreshCities()
+        private void RefreshCities()
         {
             Cities.Clear();
             if (!CheckOrOpenConnection()) throw new Exception("Connection Error");
@@ -246,7 +246,7 @@ namespace OwlSchedulerLibrary.Database
             DatabaseInformationUpdated?.Invoke(this, new PropertyChangedEventArgs("Cities Updated!"));
         }
 
-        public void RefreshAddresses()
+        private void RefreshAddresses()
         {
             Addresses.Clear();
             if (!CheckOrOpenConnection()) throw new Exception("Connection Error");
@@ -267,7 +267,7 @@ namespace OwlSchedulerLibrary.Database
             DatabaseInformationUpdated?.Invoke(this, new PropertyChangedEventArgs("Addresses Updated!"));
         }
 
-        public void RefreshCustomers()
+        private void RefreshCustomers()
         {
             Customers.Clear();
             if (!CheckOrOpenConnection()) throw new Exception("Connection Error");
@@ -288,7 +288,7 @@ namespace OwlSchedulerLibrary.Database
             DatabaseInformationUpdated?.Invoke(this, new PropertyChangedEventArgs("Customers Updated!"));
         }
 
-        public void RefreshAppointments()
+        private void RefreshAppointments()
         {
             Appointments.Clear();
             if (!CheckOrOpenConnection()) throw new Exception("Connection Error");
@@ -317,73 +317,83 @@ namespace OwlSchedulerLibrary.Database
 
         public int InsertAddress(Address newAddress)
         {
-            if (!CheckOrOpenConnection()) return -1;
-            _mySqlCommand = DatabaseQueries.GetInsertAddressCommand(_mySqlConnection.CreateCommand(), newAddress);
-            var result = _mySqlCommand.ExecuteNonQuery();
-            var row = (int)_mySqlCommand.LastInsertedId;
-            _mySqlCommand.Dispose();
-            CloseConnectionIfOpen();
+            var row = ExecuteNonQuery(_mySqlCommand = DatabaseQueries.GetInsertAddressCommand(_mySqlConnection.CreateCommand(), newAddress));
+            RefreshAddresses();
+            return row;
+        }
+
+        public int UpdateAddress(Address newAddress)
+        {
+            var row = ExecuteNonQuery(_mySqlCommand = DatabaseQueries.GetUpdateAddressCommand(_mySqlConnection.CreateCommand(), newAddress));
             RefreshAddresses();
             return row;
         }
 
         public int InsertCity(City newCity)
         {
-            if (!CheckOrOpenConnection()) return -1;
-            _mySqlCommand = DatabaseQueries.GetInsertCityCommand(_mySqlConnection.CreateCommand(), newCity);
-            var result = _mySqlCommand.ExecuteNonQuery();
-            var row = (int)_mySqlCommand.LastInsertedId;
-            _mySqlCommand.Dispose();
-            CloseConnectionIfOpen();
+            var row = ExecuteNonQuery(_mySqlCommand = DatabaseQueries.GetInsertCityCommand(_mySqlConnection.CreateCommand(), newCity));
+            RefreshCities();
+            return row;
+        }
+        
+        public int UpdateCity(City newCity)
+        {
+            var row = ExecuteNonQuery(_mySqlCommand = DatabaseQueries.GetUpdateCityCommand(_mySqlConnection.CreateCommand(), newCity));
             RefreshCities();
             return row;
         }
         
         public int InsertCountry(Country newCountry)
         {
-            if (!CheckOrOpenConnection()) return -1;
-            _mySqlCommand = DatabaseQueries.GetInsertCountryCommand(_mySqlConnection.CreateCommand(), newCountry);
-            var result = _mySqlCommand.ExecuteNonQuery();
-            var row = (int)_mySqlCommand.LastInsertedId;
-            _mySqlCommand.Dispose();
-            CloseConnectionIfOpen();
+            var row = ExecuteNonQuery(_mySqlCommand = DatabaseQueries.GetInsertCountryCommand(_mySqlConnection.CreateCommand(), newCountry));
+            RefreshCountries();
+            return row;
+        }
+        
+        public int UpdateCountry(Country newCountry)
+        {
+            var row = ExecuteNonQuery(_mySqlCommand = DatabaseQueries.GetUpdateCountryCommand(_mySqlConnection.CreateCommand(), newCountry));
             RefreshCountries();
             return row;
         }
         
         public int InsertCustomer(Customer newCustomer)
         {
-            if (!CheckOrOpenConnection()) return -1;
-            _mySqlCommand = DatabaseQueries.GetInsertCustomerCommand(_mySqlConnection.CreateCommand(), newCustomer);
-            var result = _mySqlCommand.ExecuteNonQuery();
-            var row = (int)_mySqlCommand.LastInsertedId;
-            _mySqlCommand.Dispose();
-            CloseConnectionIfOpen();
+            var row = ExecuteNonQuery(_mySqlCommand = DatabaseQueries.GetInsertCustomerCommand(_mySqlConnection.CreateCommand(), newCustomer));
             RefreshCustomers();
             return row;
         }
         
         public int UpdateCustomer(Customer newCustomer)
         {
-            if (!CheckOrOpenConnection()) return -1;
-            _mySqlCommand = DatabaseQueries.GetUpdateCustomerCommand(_mySqlConnection.CreateCommand(), newCustomer);
-            var result = _mySqlCommand.ExecuteNonQuery();
-            var row = (int)_mySqlCommand.LastInsertedId;
-            _mySqlCommand.Dispose();
-            CloseConnectionIfOpen();
+            var row = ExecuteNonQuery(_mySqlCommand = DatabaseQueries.GetUpdateCustomerCommand(_mySqlConnection.CreateCommand(), newCustomer));
             RefreshCustomers();
             return row;
         }
         
         public int InsertAppointment(Appointment newAppointment)
         {
+            var row = ExecuteNonQuery(_mySqlCommand = DatabaseQueries.GetInsertAppointmentCommand(_mySqlConnection.CreateCommand(), newAppointment));
+            RefreshAppointments();
+            return row;
+        }
+        
+        public int UpdateAppointment(Appointment newAppointment)
+        {
+            var row = ExecuteNonQuery(_mySqlCommand = DatabaseQueries.GetUpdateAppointmentCommand(_mySqlConnection.CreateCommand(), newAppointment));
+            RefreshAppointments();
+            return row;
+        }
+        
+        
+        private int ExecuteNonQuery(MySqlCommand mySqlCommand)
+        {            
             if (!CheckOrOpenConnection()) return -1;
-            _mySqlCommand = DatabaseQueries.GetInsertAppointmentCommand(_mySqlConnection.CreateCommand(), newAppointment);
             var result = _mySqlCommand.ExecuteNonQuery();
+            //if (result == -1) return -1;
             var row = (int)_mySqlCommand.LastInsertedId;
             _mySqlCommand.Dispose();
             CloseConnectionIfOpen();
-            RefreshAppointments();
             return row;
         }
         

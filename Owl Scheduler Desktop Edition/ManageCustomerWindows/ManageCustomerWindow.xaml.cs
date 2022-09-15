@@ -15,8 +15,8 @@ namespace Owl_Scheduler_Desktop_Edition.ManageCustomerWindows
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
             CurrentSession.Instance.PropertyChanged += LoginOnPropertyChanged;
-            ComboAccountPicker.ItemsSource = OwlScheduler.Instance.CustomerEditorModel.Customers;
-            ComboAddressPicker.ItemsSource = OwlScheduler.Instance.CustomerEditorModel.Addresses;
+            ComboAccountPicker.ItemsSource = OwlScheduler.Instance.CustomerDataModel.Customers;
+            ComboAddressPicker.ItemsSource = OwlScheduler.Instance.CustomerDataModel.Addresses;
         }
 
         private void LoginOnPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -53,7 +53,7 @@ namespace Owl_Scheduler_Desktop_Edition.ManageCustomerWindows
         
         private void ComboAccountPicker_OnNameSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (OwlScheduler.Instance.CustomerEditorModel.Customers.Any(x => x == ComboAccountPicker.SelectedItem as Customer))
+            if (OwlScheduler.Instance.CustomerDataModel.Customers.Any(x => x == ComboAccountPicker.SelectedItem as Customer))
             {
                 PopulateAccountInfo(ComboAccountPicker.SelectedItem as Customer);
                 CheckIfFormComplete();
@@ -66,7 +66,7 @@ namespace Owl_Scheduler_Desktop_Edition.ManageCustomerWindows
         {
             var newCustomer = GetNewCustomerToSave();
 
-            if (!OwlSchedulerLibrary.OwlSchedule.Classes.CustomerEditorSave.SaveCustomer(newCustomer, out var result))
+            if (!OwlSchedulerLibrary.OwlSchedule.Classes.CustomerDataSave.SaveCustomer(newCustomer, out var result))
             {
                 MessageBox.Show(result, "Save Error!", MessageBoxButton.OK, MessageBoxImage.Error);
                 ClearAccountInfo();
@@ -113,8 +113,8 @@ namespace Owl_Scheduler_Desktop_Edition.ManageCustomerWindows
         {
             TextBoxName.Text = customer.CustomerName;
             ComboStatusPicker.SelectedIndex = customer.Active ? 0 : 1;
-            ComboAddressPicker.SelectedItem = OwlScheduler.Instance.CustomerEditorModel.Addresses.First(x => x.AddressId == customer.CustomerAddress); 
-            UpdateAddressFields(OwlScheduler.Instance.CustomerEditorModel.Addresses.First(x => x.AddressId == customer.CustomerAddress));
+            ComboAddressPicker.SelectedItem = OwlScheduler.Instance.CustomerDataModel.Addresses.First(x => x.AddressId == customer.CustomerAddress); 
+            UpdateAddressFields(OwlScheduler.Instance.CustomerDataModel.Addresses.First(x => x.AddressId == customer.CustomerAddress));
         }
         
         private void ClearAccountInfo()
@@ -134,7 +134,7 @@ namespace Owl_Scheduler_Desktop_Edition.ManageCustomerWindows
 
         private void CheckIfFormComplete()
         {
-            if (!OwlSchedulerLibrary.OwlSchedule.Classes.CustomerEditorFormatCheck.CorrectFormatCustomerName(TextBoxName.Text, out var result))
+            if (!OwlSchedulerLibrary.OwlSchedule.Classes.CustomerDataFormatCheck.CorrectFormatCustomerName(TextBoxName.Text, out var result))
             {
                 UpdateSaveButtonStatus(false, result);
                 return;
@@ -172,8 +172,8 @@ namespace Owl_Scheduler_Desktop_Edition.ManageCustomerWindows
         private void UpdateAddressFields(Address address)
         {
             if (address == null) return;
-            var city = OwlScheduler.Instance.CustomerEditorModel.Cities.First(x => x.CityId == address.CityId);
-            var country = OwlScheduler.Instance.CustomerEditorModel.Countries.First(x => x.CountryId == city.Country);
+            var city = OwlScheduler.Instance.CustomerDataModel.Cities.First(x => x.CityId == address.CityId);
+            var country = OwlScheduler.Instance.CustomerDataModel.Countries.First(x => x.CountryId == city.Country);
             TextBoxPhone.Text = address.PhoneNumber;
             TextBoxAddressLineOne.Text = address.AddressOne;
             TextBoxAddressLineTwo.Text = address.AddressTwo;

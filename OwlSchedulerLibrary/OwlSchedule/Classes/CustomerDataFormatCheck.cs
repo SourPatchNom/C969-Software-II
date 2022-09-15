@@ -1,17 +1,28 @@
 ﻿using System;
+using System.Linq;
 
 namespace OwlSchedulerLibrary.OwlSchedule.Classes
 {
-    public static class CustomerEditorFormatCheck
+    public static class CustomerDataFormatCheck
     {
         public static bool CorrectFormatCustomerName(string input, out string result)
         {
             result = "";
+            
+            //Has value
             if (input.Length < 1)
             {
                 result = "No Customer Name Provided! ";
                 return false;
             }
+            
+            //Letters and spaces only
+            if (!input.All(x => char.IsLetter(x) || x == ' '))
+            {
+                result = "Only letters and spaces allowed in name! ";
+                return false;
+            }
+            
             return true;
         }
         

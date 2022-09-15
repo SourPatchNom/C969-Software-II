@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
+using Owl_Scheduler_Desktop_Edition.ManageAppointmentWindows;
 using Owl_Scheduler_Desktop_Edition.ManageCustomerWindows;
 using OwlSchedulerLibrary;
 using OwlSchedulerLibrary.Classes;
@@ -24,7 +25,7 @@ namespace Owl_Scheduler_Desktop_Edition
     public partial class MainWindow
     {
         private readonly ManageCustomerWindow _manageCustomerWindow = new ManageCustomerWindow();
-        private readonly WindowAppointment _windowAppointment = new WindowAppointment();
+        private readonly ManageAppointmentWindow _manageAppointmentWindow = new ManageAppointmentWindow();
         private readonly WindowUserLogin _windowUserLogin = new WindowUserLogin();
         private readonly DispatcherTimer _timer = new DispatcherTimer();
         private bool _nextTimerAlert = true;
@@ -37,8 +38,8 @@ namespace Owl_Scheduler_Desktop_Edition
             InitializeComponent();
             LogHandler.LogMessage("Main Window", "Initialized.");
             OwlScheduler.Instance.Initialize();
-            AppointmentsAll.ItemsSource = OwlScheduler.Instance.AppointmentModel.CurrentUserAppointmentsMaster;
-            TodayDataGrid.ItemsSource = OwlScheduler.Instance.AppointmentModel.CurrentUserAppointmentsDay;
+            AppointmentsAll.ItemsSource = OwlScheduler.Instance.AppointmentDataModel.CurrentUserAppointmentsMaster;
+            TodayDataGrid.ItemsSource = OwlScheduler.Instance.AppointmentDataModel.CurrentUserAppointmentsDay;
             _timer.Tick += OnTickTimeUpdate;
             _timer.Interval = new TimeSpan(0, 0, 1);
             _timer.Start();
@@ -70,7 +71,7 @@ namespace Owl_Scheduler_Desktop_Edition
             _windowUserLogin.UsernameInput.Clear();
             _windowUserLogin.PasswordInput.Clear();
             _nextTimerAlert = true;
-            AppointmentsAll.ItemsSource = OwlScheduler.Instance.AppointmentModel.CurrentUserAppointmentsMaster;
+            AppointmentsAll.ItemsSource = OwlScheduler.Instance.AppointmentDataModel.CurrentUserAppointmentsMaster;
             LabelViewMode.Content = "All Your Appointments!";
             if (CurrentSession.Instance.IsLoggedIn)
             {
@@ -85,17 +86,17 @@ namespace Owl_Scheduler_Desktop_Edition
         {
             LabelNow.Content = DateTime.Now.ToString("G");
 
-            if (OwlScheduler.Instance.AppointmentModel.CurrentNextAppointment == null)
+            if (OwlScheduler.Instance.AppointmentDataModel.CurrentNextAppointment == null)
             {
                 LabelNextApptTime.Content = " ";
                 return;
             }
 
-            var timeTillNext = OwlScheduler.Instance.AppointmentModel.CurrentNextAppointment.StartDateTime - DateTime.Now;
+            var timeTillNext = OwlScheduler.Instance.AppointmentDataModel.CurrentNextAppointment.StartDateTime - DateTime.Now;
 
             if (timeTillNext.TotalSeconds < 0)
             {
-                OwlScheduler.Instance.AppointmentModel.UpdateNowAndNext();
+                OwlScheduler.Instance.AppointmentDataModel.UpdateNowAndNext();
                 _nextTimerAlert = true;
                 return;
             }
@@ -118,19 +119,19 @@ namespace Owl_Scheduler_Desktop_Edition
 
         private void ButtonViewAll_OnClick(object sender, RoutedEventArgs e)
         {
-            AppointmentsAll.ItemsSource = OwlScheduler.Instance.AppointmentModel.CurrentUserAppointmentsMaster;
+            AppointmentsAll.ItemsSource = OwlScheduler.Instance.AppointmentDataModel.CurrentUserAppointmentsMaster;
             LabelViewMode.Content = "All Your Appointments!";
         }
 
         private void ButtonViewByMonth_OnClick(object sender, RoutedEventArgs e)
         {
-            AppointmentsAll.ItemsSource = OwlScheduler.Instance.AppointmentModel.CurrentUserAppointmentsMonth;
+            AppointmentsAll.ItemsSource = OwlScheduler.Instance.AppointmentDataModel.CurrentUserAppointmentsMonth;
             LabelViewMode.Content = "Your Appointments This Month!";
         }
 
         private void ButtonViewByWeek_OnClick(object sender, RoutedEventArgs e)
         {
-            AppointmentsAll.ItemsSource = OwlScheduler.Instance.AppointmentModel.CurrentUserAppointmentsWeek;
+            AppointmentsAll.ItemsSource = OwlScheduler.Instance.AppointmentDataModel.CurrentUserAppointmentsWeek;
             LabelViewMode.Content = "Your Appointments This Week!";
         }
 
@@ -152,7 +153,7 @@ namespace Owl_Scheduler_Desktop_Edition
 
         private void ButtonAppointments_OnClick(object sender, RoutedEventArgs e)
         {
-            _windowAppointment.Show();
+            _manageAppointmentWindow.Show();
         }
     }
 }

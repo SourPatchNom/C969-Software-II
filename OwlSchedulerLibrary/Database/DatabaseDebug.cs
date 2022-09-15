@@ -37,11 +37,11 @@ namespace OwlSchedulerLibrary.Database
             DatabaseHandler.Instance.InsertAddress(new Address(-1, "78", "Apple Street", 4, "88888", "18888888888", DateTime.UtcNow, "Admin", DateTime.UtcNow, "Admin"));
             DatabaseHandler.Instance.InsertAddress(new Address(-1, "91", "Orange Street", 5, "88888", "18888888888", DateTime.UtcNow, "Admin", DateTime.UtcNow, "Admin"));
 
-            DatabaseHandler.Instance.InsertCustomer(new Customer(-1,"John Doe",1,true,DateTime.UtcNow, "Admin", DateTime.UtcNow, "Admin"));
-            DatabaseHandler.Instance.InsertCustomer(new Customer(-1,"John Doe",2,true,DateTime.UtcNow, "Admin", DateTime.UtcNow, "Admin"));
-            DatabaseHandler.Instance.InsertCustomer(new Customer(-1,"John Doe",3,true,DateTime.UtcNow, "Admin", DateTime.UtcNow, "Admin"));
-            DatabaseHandler.Instance.InsertCustomer(new Customer(-1,"John Doe",4,false,DateTime.UtcNow, "Admin", DateTime.UtcNow, "Admin"));
-            DatabaseHandler.Instance.InsertCustomer(new Customer(-1,"John Doe",5,true,DateTime.UtcNow, "Admin", DateTime.UtcNow, "Admin"));
+            DatabaseHandler.Instance.InsertCustomer(new Customer(-1,"George Washington",1,true,DateTime.UtcNow, "Admin", DateTime.UtcNow, "Admin"));
+            DatabaseHandler.Instance.InsertCustomer(new Customer(-1,"Thomas Jefferson",2,true,DateTime.UtcNow, "Admin", DateTime.UtcNow, "Admin"));
+            DatabaseHandler.Instance.InsertCustomer(new Customer(-1,"Ben Franklin",3,true,DateTime.UtcNow, "Admin", DateTime.UtcNow, "Admin"));
+            DatabaseHandler.Instance.InsertCustomer(new Customer(-1,"Albert Einstein",4,false,DateTime.UtcNow, "Admin", DateTime.UtcNow, "Admin"));
+            DatabaseHandler.Instance.InsertCustomer(new Customer(-1,"John Wick",5,true,DateTime.UtcNow, "Admin", DateTime.UtcNow, "Admin"));
 
             DatabaseHandler.Instance.InsertAppointment(new Appointment(-1,1,1,"Meeting A","Lorem Ipsum","Facetime","Billy Bob","Virtual","http://debug.com/",DateTime.UtcNow.Add(new TimeSpan(1,2,2)), DateTime.UtcNow.Add(new TimeSpan(1,5,2)), DateTime.UtcNow, "Admin", DateTime.UtcNow, "Admin"));
             DatabaseHandler.Instance.InsertAppointment(new Appointment(-1,2,1,"Meeting B","Lorem Ipsum","Facetime","Billy Bob","Virtual","http://debug.com/",DateTime.UtcNow.Add(new TimeSpan(1,0,30)), DateTime.UtcNow.Add(new TimeSpan(1,0,45)), DateTime.UtcNow, "Admin", DateTime.UtcNow, "Admin"));

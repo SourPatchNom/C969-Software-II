@@ -6,7 +6,7 @@ using OwlSchedulerLibrary.Database;
 
 namespace OwlSchedulerLibrary.OwlSchedule.Classes
 {
-    public static class CustomerEditorSave
+    public static class CustomerDataSave
     {
 
         public static bool SaveCustomer(Customer newCustomer, out string s)

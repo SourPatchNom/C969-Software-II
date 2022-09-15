@@ -5,7 +5,7 @@ using OwlSchedulerLibrary.Database;
 
 namespace OwlSchedulerLibrary.OwlSchedule.Classes
 {
-    public class CustomerEditorModel
+    public class CustomerDataModel
     {
         
         public BindingList<Customer> Customers = new BindingList<Customer>();
@@ -13,16 +13,15 @@ namespace OwlSchedulerLibrary.OwlSchedule.Classes
         public BindingList<City> Cities = new BindingList<City>();
         public BindingList<Country> Countries = new BindingList<Country>();
 
-        public CustomerEditorModel()
+        public CustomerDataModel()
         {
-            DatabaseHandler.Instance.DatabaseInformationUpdated += UpdateAppointmentsLists;
             UpdateCountries();
             UpdateCities();
             UpdateAddresses();
             UpdateCustomers();
         }
 
-        public void UpdateAppointmentsLists(object sender, PropertyChangedEventArgs e)
+        public void UpdateData(object sender, PropertyChangedEventArgs e)
         {
             UpdateCountries();
             UpdateCities();
