@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Configuration;
 using System.Data;
-using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
 using MySql.Data.MySqlClient;
-using OwlSchedulerLibrary.Classes;
-using OwlSchedulerLibrary.Database.Classes;
+using OwlSchedulerLibrary.OwlDatabase.Extensions;
 using OwlSchedulerLibrary.OwlLogger;
-using OwlSchedulerLibrary.Database.Extensions;
+using OwlSchedulerLibrary.OwlSchedule;
+using OwlSchedulerLibrary.OwlSchedule.Classes;
 
-namespace OwlSchedulerLibrary.Database
+namespace OwlSchedulerLibrary.OwlDatabase
 {
     public sealed class DatabaseHandler
     {
@@ -27,11 +23,10 @@ namespace OwlSchedulerLibrary.Database
             
         }
 
-        private object _updateLock = new object();
         private readonly MySqlConnection _mySqlConnection = new MySqlConnection();
         private MySqlCommand _mySqlCommand = new MySqlCommand();
         private string _connectionString = "";
-        public bool Initialized { get; private set; }
+        public bool Initialized { get; set; }
 
         public Dictionary<int, Address> Addresses { get; private set; } = new Dictionary<int, Address>();
         public Dictionary<int, Appointment> Appointments { get; private set; } = new Dictionary<int, Appointment>();
@@ -201,7 +196,7 @@ namespace OwlSchedulerLibrary.Database
         {
             if (!CheckOrOpenConnection()) return;
             _mySqlCommand = DatabaseDebugTools.GetDeleteAllCommand(_mySqlConnection.CreateCommand());
-            var result = _mySqlCommand.ExecuteNonQuery();
+            _mySqlCommand.ExecuteNonQuery();
             _mySqlCommand.Dispose();
             CloseConnectionIfOpen();
         }
@@ -293,7 +288,8 @@ namespace OwlSchedulerLibrary.Database
             Appointments.Clear();
             if (!CheckOrOpenConnection()) throw new Exception("Connection Error");
             _mySqlCommand = _mySqlConnection.CreateCommand();
-            _mySqlCommand.CommandText = "SELECT * FROM appointment";
+            _mySqlCommand.CommandText = "SELECT * FROM appointment WHERE userID = @userId";
+            _mySqlCommand.Parameters.AddWithValue("@userId", CurrentSession.Instance.CurrentUser.UserId);
             var mySqlDataReader = _mySqlCommand.ExecuteReader();
             while (mySqlDataReader.Read())
             {
@@ -389,9 +385,8 @@ namespace OwlSchedulerLibrary.Database
         private int ExecuteNonQuery(MySqlCommand mySqlCommand)
         {            
             if (!CheckOrOpenConnection()) return -1;
-            var result = _mySqlCommand.ExecuteNonQuery();
-            //if (result == -1) return -1;
-            var row = (int)_mySqlCommand.LastInsertedId;
+            mySqlCommand.ExecuteNonQuery();
+            var row = (int)mySqlCommand.LastInsertedId;
             _mySqlCommand.Dispose();
             CloseConnectionIfOpen();
             return row;

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
-using OwlSchedulerLibrary.Classes;
-using OwlSchedulerLibrary.Database;
+using OwlSchedulerLibrary.OwlDatabase;
 using OwlSchedulerLibrary.OwlLogger;
+using OwlSchedulerLibrary.OwlSchedule.Classes;
 
 namespace OwlSchedulerLibrary.OwlSchedule
 {

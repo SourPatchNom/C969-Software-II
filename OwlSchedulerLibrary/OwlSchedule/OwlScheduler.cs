@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
-using OwlSchedulerLibrary.Database;
+using OwlSchedulerLibrary.OwlDatabase;
 using OwlSchedulerLibrary.OwlLogger;
-using OwlSchedulerLibrary.OwlSchedule.Classes;
+using OwlSchedulerLibrary.OwlSchedule.DataModel;
 
 namespace OwlSchedulerLibrary.OwlSchedule
 {
@@ -15,20 +15,19 @@ namespace OwlSchedulerLibrary.OwlSchedule
         public AppointmentDataModel AppointmentDataModel { get; private set; } = new AppointmentDataModel();
         public CustomerDataModel CustomerDataModel { get; private set; } = new CustomerDataModel();
 
-        public static readonly int BusinessHourAmOpen = 8;
-        public static readonly int BusinessHourPmClose = 16;
-        
+        public const int BusinessHourOpen = 8;
+        public const int BusinessHourClose = 17;
+
         private OwlScheduler()
         {
-            DatabaseHandler.Instance.DatabaseInformationUpdated += AppointmentDataModel.UpdateAppointmentData;
-            DatabaseHandler.Instance.DatabaseInformationUpdated += CustomerDataModel.UpdateData;
+            DatabaseHandler.Instance.DatabaseInformationUpdated += AppointmentDataModel.UpdateAppointmentDataEvent;
+            DatabaseHandler.Instance.DatabaseInformationUpdated += CustomerDataModel.UpdateDataEvent;
         }
 
         public void Initialize()
         {
             LogHandler.LogMessage("OwlScheduler", "Initializing.");
             CurrentSession.Instance.PropertyChanged += HandleLogin;
-
             LogHandler.LogMessage("OwlScheduler", "Initialized, waiting for user login.");
         }
 
@@ -40,7 +39,6 @@ namespace OwlSchedulerLibrary.OwlSchedule
                 DatabaseInitialize();
                 return;
             }
-
             ClearDatabaseInformation();
         }
 

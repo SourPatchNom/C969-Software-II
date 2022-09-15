@@ -3,13 +3,17 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using OwlSchedulerLibrary.Classes;
 using OwlSchedulerLibrary.OwlSchedule;
+using OwlSchedulerLibrary.OwlSchedule.Classes;
+using OwlSchedulerLibrary.OwlSchedule.DataModel;
+using OwlSchedulerLibrary.OwlSchedule.Helpers;
 
 namespace Owl_Scheduler_Desktop_Edition.ManageCustomerWindows
 {
     public partial class ManageCustomerWindow : Window
     {
+        private bool _editMode = false;
+        
         public ManageCustomerWindow()
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -37,20 +41,6 @@ namespace Owl_Scheduler_Desktop_Edition.ManageCustomerWindows
             Hide();
         }
 
-        private void ComboTypePicker_OnTypeSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (ComboAccountPicker == null) return;
-            
-            if (ComboTypePicker.SelectedIndex == 0)
-            {
-                ComboAccountPicker.IsEnabled = false;
-                ClearAccountInfo();
-                return;
-            }
-            ComboAccountPicker.IsEnabled = true;
-            ComboAccountPicker.SelectedIndex = 0;
-        }
-        
         private void ComboAccountPicker_OnNameSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (OwlScheduler.Instance.CustomerDataModel.Customers.Any(x => x == ComboAccountPicker.SelectedItem as Customer))
@@ -66,7 +56,7 @@ namespace Owl_Scheduler_Desktop_Edition.ManageCustomerWindows
         {
             var newCustomer = GetNewCustomerToSave();
 
-            if (!OwlSchedulerLibrary.OwlSchedule.Classes.CustomerDataSave.SaveCustomer(newCustomer, out var result))
+            if (!CustomerDataModify.SaveCustomer(newCustomer, out var result))
             {
                 MessageBox.Show(result, "Save Error!", MessageBoxButton.OK, MessageBoxImage.Error);
                 ClearAccountInfo();
@@ -80,21 +70,16 @@ namespace Owl_Scheduler_Desktop_Edition.ManageCustomerWindows
 
         private Customer GetNewCustomerToSave()
         {
-            Customer newCustomer;
 
-            if (ComboTypePicker.SelectedIndex == 0)
-            {
-                newCustomer = new Customer(-1, TextBoxName.Text, ((Address)ComboAddressPicker.SelectedItem).AddressId, ComboStatusPicker.SelectedIndex == 0, 
-                    DateTime.Now, CurrentSession.Instance.CurrentUser.UserName, DateTime.Now, CurrentSession.Instance.CurrentUser.UserName);
-            }
-            else
+            if (_editMode)
             {
                 var oldCustomer = ((Customer)ComboAccountPicker.SelectedItem);
-                newCustomer = new Customer(oldCustomer.CustomerId, TextBoxName.Text, oldCustomer.CustomerAddress, ComboStatusPicker.SelectedIndex == 0, oldCustomer.CreateDateTime, 
+                return new Customer(oldCustomer.CustomerId, TextBoxName.Text, oldCustomer.CustomerAddress, ComboStatusPicker.SelectedIndex == 0, oldCustomer.CreateDateTime, 
                     oldCustomer.CreateBy, DateTime.Now, CurrentSession.Instance.CurrentUser.UserName);
             }
 
-            return newCustomer;
+            return new Customer(-1, TextBoxName.Text, ((Address)ComboAddressPicker.SelectedItem).AddressId, ComboStatusPicker.SelectedIndex == 0, 
+                DateTime.Now, CurrentSession.Instance.CurrentUser.UserName, DateTime.Now, CurrentSession.Instance.CurrentUser.UserName);
         }
 
         private void CancelButton_OnClick(object sender, RoutedEventArgs e)
@@ -119,7 +104,8 @@ namespace Owl_Scheduler_Desktop_Edition.ManageCustomerWindows
         
         private void ClearAccountInfo()
         {
-            ComboTypePicker.SelectedIndex = 0;
+            RadioNew.IsChecked = true;
+            RadioEdit.IsChecked = false;
             TextBoxName.Clear();
             ComboAccountPicker.SelectedIndex = -1;
             ComboStatusPicker.SelectedIndex = 0;
@@ -134,7 +120,7 @@ namespace Owl_Scheduler_Desktop_Edition.ManageCustomerWindows
 
         private void CheckIfFormComplete()
         {
-            if (!OwlSchedulerLibrary.OwlSchedule.Classes.CustomerDataFormatCheck.CorrectFormatCustomerName(TextBoxName.Text, out var result))
+            if (!CustomerDataFormatCheck.CorrectFormatCustomerName(TextBoxName.Text, out var result))
             {
                 UpdateSaveButtonStatus(false, result);
                 return;
@@ -185,6 +171,26 @@ namespace Owl_Scheduler_Desktop_Edition.ManageCustomerWindows
         private void DeleteButton_OnClick(object sender, RoutedEventArgs e)
         {
             throw new NotImplementedException();
+        }
+
+        private void RadioNew_OnClick(object sender, RoutedEventArgs e)
+        {
+            _editMode = false;
+            RadioEdit.IsChecked = false;
+            ComboAccountPicker.IsEnabled = false;
+            ComboAccountPicker.SelectedIndex = -1;
+            DeleteButton.IsEnabled = false;
+            ClearAccountInfo();
+        }
+
+        private void RadioEdit_OnClick(object sender, RoutedEventArgs e)
+        {
+            _editMode = true;
+            RadioNew.IsChecked = false;
+            DeleteButton.IsEnabled = true;
+            ComboAccountPicker.IsEnabled = true;
+            ComboAccountPicker.SelectedIndex = 0;
+            DeleteButton.IsEnabled = true;
         }
     }
 }

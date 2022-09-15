@@ -2,11 +2,10 @@
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
-using OwlSchedulerLibrary.Classes;
-using OwlSchedulerLibrary.Database;
-using OwlSchedulerLibrary.Database.Classes;
+using OwlSchedulerLibrary.OwlDatabase;
+using OwlSchedulerLibrary.OwlSchedule.Classes;
 
-namespace OwlSchedulerLibrary.OwlSchedule.Classes
+namespace OwlSchedulerLibrary.OwlSchedule.DataModel
 {
     public class AppointmentDataModel
     {
@@ -31,7 +30,7 @@ namespace OwlSchedulerLibrary.OwlSchedule.Classes
         public Appointment CurrentNextAppointment = null;
         
         
-        public void UpdateAppointmentData(object sender, PropertyChangedEventArgs e)
+        public void UpdateAppointmentDataEvent(object sender, PropertyChangedEventArgs e)
         {
             UpdateListMaster();
             UpdateListMonth();

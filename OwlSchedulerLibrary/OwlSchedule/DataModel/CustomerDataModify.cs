@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using OwlSchedulerLibrary.Classes;
-using OwlSchedulerLibrary.Database;
+using OwlSchedulerLibrary.OwlDatabase;
+using OwlSchedulerLibrary.OwlSchedule.Classes;
 
-namespace OwlSchedulerLibrary.OwlSchedule.Classes
+namespace OwlSchedulerLibrary.OwlSchedule.DataModel
 {
-    public static class CustomerDataSave
+    public static class CustomerDataModify
     {
 
         public static bool SaveCustomer(Customer newCustomer, out string s)

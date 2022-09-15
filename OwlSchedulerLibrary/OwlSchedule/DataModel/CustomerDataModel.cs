@@ -1,17 +1,17 @@
 ﻿using System.ComponentModel;
 using System.Linq;
-using OwlSchedulerLibrary.Classes;
-using OwlSchedulerLibrary.Database;
+using OwlSchedulerLibrary.OwlDatabase;
+using OwlSchedulerLibrary.OwlSchedule.Classes;
 
-namespace OwlSchedulerLibrary.OwlSchedule.Classes
+namespace OwlSchedulerLibrary.OwlSchedule.DataModel
 {
     public class CustomerDataModel
     {
         
-        public BindingList<Customer> Customers = new BindingList<Customer>();
-        public BindingList<Address> Addresses = new BindingList<Address>();
-        public BindingList<City> Cities = new BindingList<City>();
-        public BindingList<Country> Countries = new BindingList<Country>();
+        public readonly BindingList<Customer> Customers = new BindingList<Customer>();
+        public readonly BindingList<Address> Addresses = new BindingList<Address>();
+        public readonly BindingList<City> Cities = new BindingList<City>();
+        public readonly BindingList<Country> Countries = new BindingList<Country>();
 
         public CustomerDataModel()
         {
@@ -21,7 +21,7 @@ namespace OwlSchedulerLibrary.OwlSchedule.Classes
             UpdateCustomers();
         }
 
-        public void UpdateData(object sender, PropertyChangedEventArgs e)
+        public void UpdateDataEvent(object sender, PropertyChangedEventArgs e)
         {
             UpdateCountries();
             UpdateCities();

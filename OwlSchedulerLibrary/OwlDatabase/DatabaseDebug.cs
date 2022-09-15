@@ -1,9 +1,8 @@
 ﻿using System;
 using MySql.Data.MySqlClient;
-using OwlSchedulerLibrary.Classes;
-using OwlSchedulerLibrary.Database.Classes;
+using OwlSchedulerLibrary.OwlSchedule.Classes;
 
-namespace OwlSchedulerLibrary.Database
+namespace OwlSchedulerLibrary.OwlDatabase
 {
     public static class DatabaseDebugTools
     {
@@ -48,6 +47,12 @@ namespace OwlSchedulerLibrary.Database
             DatabaseHandler.Instance.InsertAppointment(new Appointment(-1,3,1,"Meeting C","Lorem Ipsum","Facetime","Billy Bob","Virtual","http://debug.com/",DateTime.UtcNow.Add(new TimeSpan(3,2,2)), DateTime.UtcNow.Add(new TimeSpan(3,22,2)), DateTime.UtcNow, "Admin", DateTime.UtcNow, "Admin"));
             DatabaseHandler.Instance.InsertAppointment(new Appointment(-1,4,1,"Meeting D","Lorem Ipsum","Facetime","Billy Bob","Virtual","http://debug.com/",DateTime.UtcNow.Add(new TimeSpan(2,2,2)), DateTime.UtcNow.Add(new TimeSpan(2,22,2)), DateTime.UtcNow, "Admin", DateTime.UtcNow, "Admin"));
             DatabaseHandler.Instance.InsertAppointment(new Appointment(-1,5,1,"Meeting E","Lorem Ipsum","Facetime","Billy Bob","Virtual","http://debug.com/",DateTime.UtcNow.Add(new TimeSpan(6,2,2)), DateTime.UtcNow.Add(new TimeSpan(6,22,2)), DateTime.UtcNow, "Admin", DateTime.UtcNow, "Admin"));
+            
+            DatabaseHandler.Instance.InsertAppointment(new Appointment(-1,1,2,"Meeting2 A","Lorem Ipsum","Facetime","Billy Bob","Virtual","http://debug.com/",DateTime.UtcNow.Add(new TimeSpan(1,2,2)), DateTime.UtcNow.Add(new TimeSpan(1,5,2)), DateTime.UtcNow, "Admin", DateTime.UtcNow, "Admin"));
+            DatabaseHandler.Instance.InsertAppointment(new Appointment(-1,2,2,"Meeting2 B","Lorem Ipsum","Facetime","Billy Bob","Virtual","http://debug.com/",DateTime.UtcNow.Add(new TimeSpan(1,0,30)), DateTime.UtcNow.Add(new TimeSpan(1,0,45)), DateTime.UtcNow, "Admin", DateTime.UtcNow, "Admin"));
+            DatabaseHandler.Instance.InsertAppointment(new Appointment(-1,3,2,"Meeting2 C","Lorem Ipsum","Facetime","Billy Bob","Virtual","http://debug.com/",DateTime.UtcNow.Add(new TimeSpan(3,2,2)), DateTime.UtcNow.Add(new TimeSpan(3,22,2)), DateTime.UtcNow, "Admin", DateTime.UtcNow, "Admin"));
+            DatabaseHandler.Instance.InsertAppointment(new Appointment(-1,4,2,"Meeting2 D","Lorem Ipsum","Facetime","Billy Bob","Virtual","http://debug.com/",DateTime.UtcNow.Add(new TimeSpan(2,2,2)), DateTime.UtcNow.Add(new TimeSpan(2,22,2)), DateTime.UtcNow, "Admin", DateTime.UtcNow, "Admin"));
+            DatabaseHandler.Instance.InsertAppointment(new Appointment(-1,5,2,"Meeting2 E","Lorem Ipsum","Facetime","Billy Bob","Virtual","http://debug.com/",DateTime.UtcNow.Add(new TimeSpan(6,2,2)), DateTime.UtcNow.Add(new TimeSpan(6,22,2)), DateTime.UtcNow, "Admin", DateTime.UtcNow, "Admin"));
             
             DatabaseHandler.Instance.InsertAppointment(new Appointment(-1,1,1,"Meeting A1","Lorem Ipsum","Facetime","Billy Bob","Virtual","http://debug.com/",DateTime.UtcNow.Add(new TimeSpan(163,2,2)), DateTime.UtcNow.Add(new TimeSpan(163,22,2)), DateTime.UtcNow, "Admin", DateTime.UtcNow, "Admin"));
             DatabaseHandler.Instance.InsertAppointment(new Appointment(-1,2,1,"Meeting B1","Lorem Ipsum","Facetime","Billy Bob","Virtual","http://debug.com/",DateTime.UtcNow.Add(new TimeSpan(162,2,2)), DateTime.UtcNow.Add(new TimeSpan(162,22,2)), DateTime.UtcNow, "Admin", DateTime.UtcNow, "Admin"));

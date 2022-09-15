@@ -1,7 +1,6 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
-namespace OwlSchedulerLibrary.OwlSchedule.Classes
+namespace OwlSchedulerLibrary.OwlSchedule.Helpers
 {
     public static class CustomerDataFormatCheck
     {
@@ -34,6 +33,11 @@ namespace OwlSchedulerLibrary.OwlSchedule.Classes
                 result = "No Customer Phone Provided! ";
                 return false;
             }
+            if (input.All(x => char.IsNumber(x) || x == '-'))
+            {
+                result = "Numbers and - only for phone please! ";
+                return false;
+            }
             return true;
         }
         
@@ -45,6 +49,13 @@ namespace OwlSchedulerLibrary.OwlSchedule.Classes
                 result = "No Customer Address Line One Provided! ";
                 return false;
             }
+            
+            if (!input.All(x => char.IsLetter(x) || char.IsNumber(x) || x == ' '))
+            {
+                result = "Only letters, numbers, and spaces allowed in name! ";
+                return false;
+            }
+            
             return true;
         }
         
@@ -56,6 +67,13 @@ namespace OwlSchedulerLibrary.OwlSchedule.Classes
                 result = "No Customer Address Line Two Provided! ";
                 return false;
             }
+            
+            if (!input.All(x => char.IsLetter(x) || char.IsNumber(x) || x == ' '))
+            {
+                result = "Only letters, numbers, and spaces allowed in name! ";
+                return false;
+            }
+            
             return true;
         }
         

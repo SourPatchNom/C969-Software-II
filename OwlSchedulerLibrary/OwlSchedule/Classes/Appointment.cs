@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OwlSchedulerLibrary.Database.Classes
+namespace OwlSchedulerLibrary.OwlSchedule.Classes
 {
     public class Appointment
     {

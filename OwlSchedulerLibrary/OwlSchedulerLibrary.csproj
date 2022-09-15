@@ -84,22 +84,24 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Database\Classes\Address.cs" />
-        <Compile Include="Database\Classes\Appointment.cs" />
-        <Compile Include="Database\Classes\City.cs" />
-        <Compile Include="Database\Classes\Country.cs" />
-        <Compile Include="Database\Classes\Customer.cs" />
-        <Compile Include="Database\Classes\User.cs" />
-        <Compile Include="Database\DatabaseDebug.cs" />
-        <Compile Include="Database\DatabaseHandler.cs" />
-        <Compile Include="Database\DatabaseQueries.cs" />
-        <Compile Include="Database\Extensions\TimeZoneConvert.cs" />
+        <Compile Include="OwlDatabase\DatabaseDebug.cs" />
+        <Compile Include="OwlDatabase\DatabaseHandler.cs" />
+        <Compile Include="OwlDatabase\DatabaseQueries.cs" />
+        <Compile Include="OwlDatabase\Extensions\TimeZoneConvert.cs" />
         <Compile Include="OwlLogger\LogHandler.cs" />
-        <Compile Include="OwlSchedule\Classes\AppointmentDataModel.cs" />
-        <Compile Include="OwlSchedule\Classes\CustomerDataFormatCheck.cs" />
-        <Compile Include="OwlSchedule\Classes\CustomerDataModel.cs" />
-        <Compile Include="OwlSchedule\Classes\CustomerDataSave.cs" />
+        <Compile Include="OwlSchedule\Classes\Address.cs" />
+        <Compile Include="OwlSchedule\Classes\Appointment.cs" />
+        <Compile Include="OwlSchedule\Classes\City.cs" />
+        <Compile Include="OwlSchedule\Classes\Country.cs" />
+        <Compile Include="OwlSchedule\Classes\Customer.cs" />
+        <Compile Include="OwlSchedule\Classes\User.cs" />
+        <Compile Include="OwlSchedule\DataModel\AppointmentDataModel.cs" />
+        <Compile Include="OwlSchedule\DataModel\AppointmentDataModify.cs" />
+        <Compile Include="OwlSchedule\DataModel\CustomerDataModel.cs" />
+        <Compile Include="OwlSchedule\DataModel\CustomerDataModify.cs" />
         <Compile Include="OwlSchedule\CurrentSession.cs" />
+        <Compile Include="OwlSchedule\Helpers\AppointmentDataFormatCheck.cs" />
+        <Compile Include="OwlSchedule\Helpers\CustomerDataFormatCheck.cs" />
         <Compile Include="OwlSchedule\OwlScheduler.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>

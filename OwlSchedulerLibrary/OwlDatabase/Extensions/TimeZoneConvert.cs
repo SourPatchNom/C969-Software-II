@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OwlSchedulerLibrary.Database.Extensions
+namespace OwlSchedulerLibrary.OwlDatabase.Extensions
 {
     public static class TimeZoneConvert
     {

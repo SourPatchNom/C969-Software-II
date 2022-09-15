@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OwlSchedulerLibrary.Classes
+namespace OwlSchedulerLibrary.OwlSchedule.Classes
 {
     public class Country
     {

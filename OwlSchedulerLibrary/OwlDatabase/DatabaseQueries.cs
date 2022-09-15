@@ -1,8 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
-using OwlSchedulerLibrary.Classes;
-using OwlSchedulerLibrary.Database.Classes;
+using OwlSchedulerLibrary.OwlSchedule.Classes;
 
-namespace OwlSchedulerLibrary.Database
+namespace OwlSchedulerLibrary.OwlDatabase
 {
     public static class DatabaseQueries
     {

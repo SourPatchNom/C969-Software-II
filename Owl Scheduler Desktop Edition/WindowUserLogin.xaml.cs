@@ -3,7 +3,6 @@ using System.Globalization;
 using System.Windows;
 using OwlSchedulerLibrary;
 using OwlSchedulerLibrary.OwlSchedule;
-using OwlSchedulerLibrary.OwlSchedule.Classes;
 
 namespace Owl_Scheduler_Desktop_Edition
 {
