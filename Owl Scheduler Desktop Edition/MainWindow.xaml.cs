@@ -142,11 +142,13 @@ namespace Owl_Scheduler_Desktop_Edition
         private void ButtonCustomers_OnClick(object sender, RoutedEventArgs e)
         {
             _manageCustomerWindow.Show();
+            _manageCustomerWindow.Activate();
         }
 
         private void ButtonAppointments_OnClick(object sender, RoutedEventArgs e)
         {
             _manageAppointmentWindow.Show();
+            _manageAppointmentWindow.Activate();
         }
 
         private void ButtonReports_OnClick(object sender, RoutedEventArgs e)

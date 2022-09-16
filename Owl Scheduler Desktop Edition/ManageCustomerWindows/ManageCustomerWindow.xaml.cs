@@ -13,6 +13,9 @@ namespace Owl_Scheduler_Desktop_Edition.ManageCustomerWindows
     public partial class ManageCustomerWindow : Window
     {
         private bool _editMode = false;
+        private ManageAddressWindow _manageAddressWindow = new ManageAddressWindow();
+        private ManageCityWindow _manageCityWindow = new ManageCityWindow();
+        private ManageCountryWindow _manageCountryWindow = new ManageCountryWindow();
         
         public ManageCustomerWindow()
         {
@@ -215,6 +218,24 @@ namespace Owl_Scheduler_Desktop_Edition.ManageCustomerWindows
             ComboAccountPicker.IsEnabled = true;
             ComboAccountPicker.SelectedIndex = 0;
             DeleteButton.IsEnabled = true;
+        }
+
+        private void ButtonManageAddresses_OnClick(object sender, RoutedEventArgs e)
+        {
+            _manageAddressWindow.Show();
+            _manageAddressWindow.Activate();
+        }
+
+        private void ButtonManageCity_OnClick(object sender, RoutedEventArgs e)
+        {
+            _manageCityWindow.Show();
+            _manageCityWindow.Activate();
+        }
+
+        private void ButtonManageCountry_OnClick(object sender, RoutedEventArgs e)
+        {
+            _manageCountryWindow.Show();
+            _manageCountryWindow.Activate();
         }
     }
 }
