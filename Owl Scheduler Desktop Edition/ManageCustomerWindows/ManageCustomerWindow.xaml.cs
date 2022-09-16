@@ -28,12 +28,6 @@ namespace Owl_Scheduler_Desktop_Edition.ManageCustomerWindows
             if (!CurrentSession.Instance.IsLoggedIn) Hide();
         }
 
-        private void WindowCustomer_OnDeactivated(object sender, EventArgs e)
-        {
-            ClearAccountInfo();
-            Hide();
-        }
-
         private void WindowCustomer_OnClosing(object sender, CancelEventArgs e)
         {
             e.Cancel = true;
@@ -45,7 +39,7 @@ namespace Owl_Scheduler_Desktop_Edition.ManageCustomerWindows
         {
             if (OwlScheduler.Instance.CustomerDataModel.Customers.Any(x => x == ComboAccountPicker.SelectedItem as Customer))
             {
-                PopulateAccountInfo(ComboAccountPicker.SelectedItem as Customer);
+                PopulateAccountInfo();
                 CheckIfFormComplete();
                 return;
             }
@@ -88,14 +82,48 @@ namespace Owl_Scheduler_Desktop_Edition.ManageCustomerWindows
             Hide();
         }
 
+        private void DeleteButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (!_editMode) return;
+            if (ComboAccountPicker.SelectedIndex == -1) return;
+            var confirm = MessageBox.Show("You are about to delete a record! Are you sure?", "Delete Appointment?", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
+            if (confirm != MessageBoxResult.Yes) return;
+            if (CustomerDataModify.DeleteCustomer(((Customer)ComboAccountPicker.SelectedItem).CustomerId, out string result))
+            {
+                MessageBox.Show("Record deleted!\n" + result, "Delete Customer", MessageBoxButton.OK, MessageBoxImage.Information);
+                
+                if (!ComboAccountPicker.HasItems)
+                {
+                    _editMode = false;
+                    RadioEdit.IsChecked = false;
+                    RadioNew.IsChecked = true;
+                    RadioNew_OnClick(sender,e);
+                    ClearAccountInfo();
+                    return;
+                }
+                RadioEdit.IsChecked = true;
+                RadioNew.IsChecked = false;
+                ComboAccountPicker.SelectedIndex = 0;
+                PopulateAccountInfo();
+                return;
+            }
+            MessageBox.Show(this, "Record delete failed!\n" + result, "Delete Customer", MessageBoxButton.OK, MessageBoxImage.Error);
+            _editMode = false;
+            RadioEdit.IsChecked = false;
+            RadioNew.IsChecked = true;
+            RadioNew_OnClick(sender,e);
+            ClearAccountInfo();
+            Hide();
+        }
 
         private void TextBoxName_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             CheckIfFormComplete();
         }
 
-        private void PopulateAccountInfo(Customer customer)
+        private void PopulateAccountInfo()
         {
+            var customer = (Customer)ComboAccountPicker.SelectedItem;
             TextBoxName.Text = customer.CustomerName;
             ComboStatusPicker.SelectedIndex = customer.Active ? 0 : 1;
             ComboAddressPicker.SelectedItem = OwlScheduler.Instance.CustomerDataModel.Addresses.First(x => x.AddressId == customer.CustomerAddress); 
@@ -167,14 +195,7 @@ namespace Owl_Scheduler_Desktop_Edition.ManageCustomerWindows
             TextBoxCity.Text = city.CityName;
             TextBoxCountry.Text = country.CountryName;
         }
-
-        private void DeleteButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            if (CustomerDataModify.DeleteCustomer(((Customer)ComboAccountPicker.SelectedItem).CustomerId, out string result))
-            {
-                //TODO pickup here
-            }
-        }
+        
 
         private void RadioNew_OnClick(object sender, RoutedEventArgs e)
         {

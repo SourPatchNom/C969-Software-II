@@ -307,6 +307,21 @@ namespace OwlSchedulerLibrary.OwlDatabase
             DatabaseInformationUpdated?.Invoke(this, new PropertyChangedEventArgs("Appointments Updated!"));
         }
         
+        public bool CustomerHasAppointments(int id)
+        {
+            if (!CheckOrOpenConnection()) throw new Exception("Connection Error");
+            _mySqlCommand = _mySqlConnection.CreateCommand();
+            _mySqlCommand.CommandText = "SELECT * FROM appointment WHERE customerId = @customerId";
+            _mySqlCommand.Parameters.AddWithValue("@customerId", id);
+            var mySqlDataReader = _mySqlCommand.ExecuteReader();
+            var hasRows = mySqlDataReader.HasRows; 
+            LogHandler.LogMessage("DatabaseHandler", hasRows ? "Attempted customer delete failed on " + id + ". Customer has appointment in database." : "Customer " + id + " deleted.");
+            mySqlDataReader.Close();
+            _mySqlCommand.Dispose();
+            CloseConnectionIfOpen();
+            return hasRows;
+        }
+        
         #endregion
         
         #region InsertNewRecords
@@ -369,7 +384,9 @@ namespace OwlSchedulerLibrary.OwlDatabase
         
         public int DeleteCustomer(int id)
         {
-            throw new NotImplementedException();
+            var row = ExecuteNonQueryReturnRow(_mySqlCommand = DatabaseQueries.GetDeleteCustomerCommand(_mySqlConnection.CreateCommand(), id));
+            RefreshCustomers();
+            return row;
         }
         
         public int InsertAppointment(Appointment newAppointment)
@@ -392,7 +409,7 @@ namespace OwlSchedulerLibrary.OwlDatabase
             RefreshAppointments();
             return row;
         }
-        
+
         private int ExecuteNonQueryReturnRecord(MySqlCommand mySqlCommand)
         {            
             if (!CheckOrOpenConnection()) return -1;

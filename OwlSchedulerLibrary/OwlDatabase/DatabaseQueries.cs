@@ -274,10 +274,10 @@ namespace OwlSchedulerLibrary.OwlDatabase
         /// <param name="command">Command associated with mysql connection.</param>
         /// <param name="targetCustomer">Customer object that needs to be deleted from the database.</param>
         /// <returns>Formatted MySqlCommand object.</returns>
-        public static MySqlCommand GetDeleteCustomerCommand(MySqlCommand command, Customer targetCustomer)
+        public static MySqlCommand GetDeleteCustomerCommand(MySqlCommand command, int targetCustomer)
         {
             command.CommandText = "DELETE FROM customer WHERE customerId=@CustomerId";
-            command.Parameters.AddWithValue("@CustomerId", targetCustomer.CustomerId);
+            command.Parameters.AddWithValue("@CustomerId", targetCustomer);
             return command;
         }
         

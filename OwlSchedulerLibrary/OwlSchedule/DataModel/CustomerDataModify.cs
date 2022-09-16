@@ -41,6 +41,12 @@ namespace OwlSchedulerLibrary.OwlSchedule.DataModel
         {
             try
             {
+                if (DatabaseHandler.Instance.CustomerHasAppointments(id))
+                {
+                    result = "Customer cannot be deleted, they have appointments scheduled!";
+                    return false;
+                }
+                
                 if (DatabaseHandler.Instance.DeleteCustomer(id) == 1)
                 {
                     result = "Success!";

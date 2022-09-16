@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:Owl_Scheduler_Desktop_Edition"
         mc:Ignorable="d"
-        Title="WindowCustomer" Height="900" Width="1000" FontSize="20"  Deactivated="WindowCustomer_OnDeactivated" Closing="WindowCustomer_OnClosing" >
+        Title="WindowCustomer" Height="900" Width="1000" FontSize="20"  Closing="WindowCustomer_OnClosing" >
     <Grid>
         <Label HorizontalAlignment="Center" Content="Customer Manager"/>
         <Label HorizontalAlignment="Center" x:Name="LabelErrors" Content="Errors" Margin="0,30,0,0" Visibility="Hidden" Foreground="Firebrick"/>
