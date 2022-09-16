@@ -14,6 +14,7 @@ namespace OwlSchedulerLibrary.OwlSchedule
         
         public AppointmentDataModel AppointmentDataModel { get; private set; } = new AppointmentDataModel();
         public CustomerDataModel CustomerDataModel { get; private set; } = new CustomerDataModel();
+        public UserDataModel UserDataModel { get; private set; } = new UserDataModel();
 
         public const int BusinessHourOpen = 8;
         public const int BusinessHourClose = 17;
@@ -22,6 +23,7 @@ namespace OwlSchedulerLibrary.OwlSchedule
         {
             DatabaseHandler.Instance.DatabaseInformationUpdated += AppointmentDataModel.UpdateAppointmentDataEvent;
             DatabaseHandler.Instance.DatabaseInformationUpdated += CustomerDataModel.UpdateDataEvent;
+            DatabaseHandler.Instance.DatabaseInformationUpdated += UserDataModel.UpdateDataEvent;
         }
 
         public void Initialize()

@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Threading;
 using Owl_Scheduler_Desktop_Edition.ManageAppointmentWindows;
 using Owl_Scheduler_Desktop_Edition.ManageCustomerWindows;
+using Owl_Scheduler_Desktop_Edition.ReportingWindows;
 using OwlSchedulerLibrary.OwlDatabase;
 using OwlSchedulerLibrary.OwlLogger;
 using OwlSchedulerLibrary.OwlSchedule;
@@ -22,12 +23,13 @@ namespace Owl_Scheduler_Desktop_Edition
         private readonly ManageAppointmentWindow _manageAppointmentWindow = new ManageAppointmentWindow();
         private readonly WindowUserLogin _windowUserLogin = new WindowUserLogin();
         private readonly DispatcherTimer _timer = new DispatcherTimer();
+        private readonly ReportsWindow _reportsWindow = new ReportsWindow();
         private bool _nextTimerAlert = true;
         
         public MainWindow()
         {
+
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            
             InitializeComponent();
             LogHandler.LogMessage("Main Window", "Initialized.");
             OwlScheduler.Instance.Initialize();
@@ -37,7 +39,7 @@ namespace Owl_Scheduler_Desktop_Edition
             _timer.Interval = new TimeSpan(0, 0, 1);
             _timer.Start();
             
-            if (!DatabaseHandler.Instance.Initialize(ConfigurationManager.ConnectionStrings["devdb"].ConnectionString, out var connectionResult))
+            if (!DatabaseHandler.Instance.Initialize(ConfigurationManager.ConnectionStrings["localdb"].ConnectionString, out var connectionResult))
             {
                 var result = MessageBox.Show("Connection Error!\n" + connectionResult, "Connection Error!", MessageBoxButton.OK, MessageBoxImage.Error);
 
@@ -48,15 +50,10 @@ namespace Owl_Scheduler_Desktop_Edition
             }
             
             CurrentSession.Instance.PropertyChanged += LoginOnPropertyChanged;
-            //TODO enable for release!
-            // Hide();
-            // _windowUserLogin.Show();
-            // _windowUserLogin.Activate();
 
-            
-            CurrentSession.Instance.ProcessLoginAttempt("test", "test");
-            
-            
+            Hide();
+            _windowUserLogin.Show();
+            _windowUserLogin.Activate();
         }
 
         private void LoginOnPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -153,7 +150,8 @@ namespace Owl_Scheduler_Desktop_Edition
 
         private void ButtonReports_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            _reportsWindow.Show();
+            _reportsWindow.Activate();
         }
     }
 }

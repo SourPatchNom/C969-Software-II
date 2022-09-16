@@ -123,7 +123,7 @@ namespace OwlSchedulerLibrary.OwlDatabase
         /// <returns>Formatted MySqlCommand object.</returns>
         public static MySqlCommand GetUpdateAddressCommand(MySqlCommand command, Address targetAddress)
         {
-            command.CommandText = "UPDATE address SET address = @AddressOne, address2 = @AddressTwo, cityId = @AddressCity, postalCode = @AddressPostal, phone = @AddressPhone, lastUpdate = @AddressLastUpdate, lastUpdateBy = @LastUpdateUser WHERE addressId = @AddressId";
+            command.CommandText = "UPDATE address SET address = @AddressOne, address2 = @AddressTwo, cityId = @AddressCity, postalCode = @AddressPostal, phone = @AddressPhone, lastUpdate = @AddressLastUpdate, lastUpdateBy = @AddressLastUpdateUser WHERE addressId = @AddressId";
             command.Parameters.AddWithValue("@AddressId", targetAddress.AddressId);
             command.Parameters.AddWithValue("@AddressOne", targetAddress.AddressOne);
             command.Parameters.AddWithValue("@AddressTwo", targetAddress.AddressTwo);
@@ -190,7 +190,7 @@ namespace OwlSchedulerLibrary.OwlDatabase
             command.Parameters.AddWithValue("@CountryId", targetCountry.CountryId);
             command.Parameters.AddWithValue("@Name", targetCountry.CountryName);
             command.Parameters.AddWithValue("@LastUpdate", targetCountry.LastUpdateDateTime.ToUniversalTime());
-            command.Parameters.AddWithValue("@LastUpdateBy", targetCountry.LastUpdateBy);
+            command.Parameters.AddWithValue("@LastUpdateUser", targetCountry.LastUpdateBy);
             return command;
         }
         
@@ -222,10 +222,10 @@ namespace OwlSchedulerLibrary.OwlDatabase
         /// <param name="command">Command associated with mysql connection.</param>
         /// <param name="targetAddress">Address object that needs to be deleted from the database.</param>
         /// <returns>Formatted MySqlCommand object.</returns>
-        public static MySqlCommand GetDeleteAddressCommand(MySqlCommand command, Address targetAddress)
+        public static MySqlCommand GetDeleteAddressCommand(MySqlCommand command, int targetAddress)
         {
             command.CommandText = "DELETE FROM address WHERE addressId = @AddressId";
-            command.Parameters.AddWithValue("@AddressId", targetAddress.AddressId);
+            command.Parameters.AddWithValue("@AddressId", targetAddress);
             return command;
         }
 
@@ -248,10 +248,10 @@ namespace OwlSchedulerLibrary.OwlDatabase
         /// <param name="command">Command associated with mysql connection.</param>
         /// <param name="targetCity">City object that needs to be deleted from the database.</param>
         /// <returns>Formatted MySqlCommand object.</returns>
-        public static MySqlCommand GetDeleteCityCommand(MySqlCommand command, City targetCity)
+        public static MySqlCommand GetDeleteCityCommand(MySqlCommand command, int targetCity)
         {
             command.CommandText = "DELETE FROM city WHERE cityId=@Id";
-            command.Parameters.AddWithValue("@Id", targetCity.CityId);
+            command.Parameters.AddWithValue("@Id", targetCity);
             return command;
         }
         
@@ -261,10 +261,10 @@ namespace OwlSchedulerLibrary.OwlDatabase
         /// <param name="command">Command associated with mysql connection.</param>
         /// <param name="targetCountry">Country object that needs to be deleted from the database.</param>
         /// <returns>Formatted MySqlCommand object.</returns>
-        public static MySqlCommand GetDeleteCountryCommand(MySqlCommand command, Country targetCountry)
+        public static MySqlCommand GetDeleteCountryCommand(MySqlCommand command, int targetCountry)
         {
             command.CommandText = "DELETE FROM country WHERE countryId=@CountryId";
-            command.Parameters.AddWithValue("@CountryId", targetCountry.CountryId);
+            command.Parameters.AddWithValue("@CountryId", targetCountry);
             return command;
         }
         

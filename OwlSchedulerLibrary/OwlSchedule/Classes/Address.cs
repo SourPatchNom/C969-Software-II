@@ -7,6 +7,9 @@ namespace OwlSchedulerLibrary.OwlSchedule.Classes
         public int AddressId { get; private set; }
         public string AddressOne { get; private set; }
         public string AddressTwo { get; private set; }
+        
+        public string FullAddress => AddressOne + " " + AddressTwo;
+    
         public int CityId { get; private set; }
         public string PostalCode { get; private set; }
         public string PhoneNumber { get; private set; }

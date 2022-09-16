@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:Owl_Scheduler_Desktop_Edition"
         mc:Ignorable="d"
-        Title="WindowCustomer" Height="900" Width="1000" FontSize="20"  Closing="WindowCustomer_OnClosing" >
+        Title="WindowCustomer" Height="900" Width="1000" FontSize="20"  Closing="WindowCustomer_OnClosing" ResizeMode="NoResize">
     <Grid>
         <Label HorizontalAlignment="Center" Content="Customer Manager"/>
         <Label HorizontalAlignment="Center" x:Name="LabelErrors" Content="Errors" Margin="0,30,0,0" Visibility="Hidden" Foreground="Firebrick"/>
@@ -52,7 +52,7 @@
                         <ColumnDefinition Width="4*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <ComboBox Grid.Column="0" Grid.Row="0" x:Name="ComboAddressPicker" Margin="0,25,0, 0" DisplayMemberPath="AddressId" SelectionChanged="ComboAddressPicker_OnSelectionChanged" />
+                    <ComboBox Grid.Column="0" Grid.Row="0" x:Name="ComboAddressPicker" Margin="0,25,0, 0" DisplayMemberPath="FullAddress" SelectionChanged="ComboAddressPicker_OnSelectionChanged" />
                     <Button Grid.Column="1" Grid.Row="0" Height="30" Margin="10,25,10,0" Content="Manage Addresses" FontSize="12" Click="ButtonManageAddresses_OnClick"/>
                 </Grid>
                 <TextBox x:Name="TextBoxPhone" Margin="0,25,0, 0" Height="30" IsEnabled="False"/>

@@ -1,0 +1,5 @@
+﻿DEBUG mode will cleanse and refill database with generic information.
+
+Login menu language support for en-US or en, fr-FR or fr, and es-ES or es. Can be found on WindowUserLogin.xaml.cs 
+
+Three comments regarding lambda expressions marked with TODO 

@@ -100,6 +100,7 @@
         <Compile Include="OwlSchedule\DataModel\CustomerDataModel.cs" />
         <Compile Include="OwlSchedule\DataModel\CustomerDataModify.cs" />
         <Compile Include="OwlSchedule\CurrentSession.cs" />
+        <Compile Include="OwlSchedule\DataModel\UserDataModel.cs" />
         <Compile Include="OwlSchedule\Helpers\AppointmentDataFormatCheck.cs" />
         <Compile Include="OwlSchedule\Helpers\CustomerDataFormatCheck.cs" />
         <Compile Include="OwlSchedule\OwlScheduler.cs" />

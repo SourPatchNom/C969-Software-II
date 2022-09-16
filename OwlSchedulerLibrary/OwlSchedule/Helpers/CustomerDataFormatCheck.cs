@@ -33,7 +33,7 @@ namespace OwlSchedulerLibrary.OwlSchedule.Helpers
                 result = "No Customer Phone Provided! ";
                 return false;
             }
-            if (input.All(x => char.IsNumber(x) || x == '-'))
+            if (!input.All(x => char.IsNumber(x) || x == '-'))
             {
                 result = "Numbers and - only for phone please! ";
                 return false;

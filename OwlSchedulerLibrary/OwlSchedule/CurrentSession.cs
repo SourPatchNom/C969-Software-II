@@ -28,14 +28,14 @@ namespace OwlSchedulerLibrary.OwlSchedule
             IsLoggedIn = false;
             CurrentUser = null;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("User Logged Out!"));
-            LogHandler.LogMessage("User Authentication", "User " + CurrentUser + " logged out.");
+            LogHandler.LogMessage("User Authentication", "User " + CurrentUser?.UserName + " logged out.");
         }
 
         public bool ProcessLoginAttempt(string username, string password)
         {
             if (!AuthenticateUser(username, password)) return false;
             IsLoggedIn = true;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("User " + CurrentUser + " logged In!"));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("User " + CurrentUser?.UserName + " logged In!"));
             return true;
         }
 
@@ -43,7 +43,7 @@ namespace OwlSchedulerLibrary.OwlSchedule
         {
             var isGood = DatabaseHandler.Instance.LoginUser(u, p, out User user);
             if (isGood) CurrentUser = user;
-            LogHandler.LogMessage("User Authentication", isGood ? "User " + u + " successfully logged in!" : "Login Attempt Failed! Incorrect credentials given by " + u);
+            LogHandler.LogMessage("User Authentication ####### ", isGood ? "User " + u + " successfully logged in!" : "Login Attempt Failed! Incorrect credentials given by " + u);
             return isGood;
         }
     }

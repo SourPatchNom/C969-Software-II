@@ -38,6 +38,10 @@ namespace Owl_Scheduler_Desktop_Edition.ManageAppointmentWindows
         private void WindowAppointment_OnClosing(object sender, CancelEventArgs e)
         {
             e.Cancel = true;
+            _editMode = false;
+            ComboAppointmentPicker.IsEnabled = false;
+            RadioEdit.IsChecked = false;
+            RadioNew.IsChecked = true;
             ClearFieldInfo();
             Hide();
         }
@@ -60,6 +64,11 @@ namespace Owl_Scheduler_Desktop_Edition.ManageAppointmentWindows
 
         private void CancelButton_OnClick(object sender, RoutedEventArgs e)
         {
+            _editMode = false;
+            ComboAppointmentPicker.IsEnabled = false;
+            RadioEdit.IsChecked = false;
+            RadioNew.IsChecked = true;
+            RadioNew_OnClick(sender,e);
             ClearFieldInfo();
             Hide();
         }

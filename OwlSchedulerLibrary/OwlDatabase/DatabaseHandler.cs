@@ -20,7 +20,6 @@ namespace OwlSchedulerLibrary.OwlDatabase
         private DatabaseHandler()
         {
             
-            
         }
 
         private readonly MySqlConnection _mySqlConnection = new MySqlConnection();
@@ -28,6 +27,7 @@ namespace OwlSchedulerLibrary.OwlDatabase
         private string _connectionString = "";
         public bool Initialized { get; set; }
 
+        public Dictionary<int, User> Users { get; private set; } = new Dictionary<int, User>();
         public Dictionary<int, Address> Addresses { get; private set; } = new Dictionary<int, Address>();
         public Dictionary<int, Appointment> Appointments { get; private set; } = new Dictionary<int, Appointment>();
         public Dictionary<int, City> Cities { get; private set; } = new Dictionary<int, City>();
@@ -185,6 +185,7 @@ namespace OwlSchedulerLibrary.OwlDatabase
 #endif
             
             LogHandler.LogMessage("DatabaseHandler","Attempting to sync database!");
+            RefreshUsers();
             RefreshCountries();
             RefreshCities();
             RefreshAddresses();
@@ -199,6 +200,25 @@ namespace OwlSchedulerLibrary.OwlDatabase
             _mySqlCommand.ExecuteNonQuery();
             _mySqlCommand.Dispose();
             CloseConnectionIfOpen();
+        }
+
+        private void RefreshUsers()
+        {
+            Users.Clear();
+            if (!CheckOrOpenConnection()) throw new Exception("Connection Error");
+            _mySqlCommand = _mySqlConnection.CreateCommand();
+            _mySqlCommand.CommandText = "SELECT userId, userName, active FROM user";
+            var mySqlDataReader = _mySqlCommand.ExecuteReader();
+            while (mySqlDataReader.Read())
+            {
+                var user = new User(mySqlDataReader.GetInt32(0), mySqlDataReader.GetString(1), mySqlDataReader.GetInt32(2)); 
+                Users.Add(user.UserId,user);
+            }
+            LogHandler.LogMessage("DatabaseHandler","Total Countries " + Countries.Count);
+            mySqlDataReader.Close();
+            _mySqlCommand.Dispose();
+            CloseConnectionIfOpen();
+            DatabaseInformationUpdated?.Invoke(this, new PropertyChangedEventArgs("Users Updated!"));
         }
 
         private void RefreshCountries()
@@ -288,8 +308,10 @@ namespace OwlSchedulerLibrary.OwlDatabase
             Appointments.Clear();
             if (!CheckOrOpenConnection()) throw new Exception("Connection Error");
             _mySqlCommand = _mySqlConnection.CreateCommand();
-            _mySqlCommand.CommandText = "SELECT * FROM appointment WHERE userID = @userId";
-            _mySqlCommand.Parameters.AddWithValue("@userId", CurrentSession.Instance.CurrentUser.UserId);
+            _mySqlCommand.CommandText = "SELECT * FROM appointment";
+            // This version should be implemented for large databases, though given assignment, we are going to collect ALL appointments from DB. Preserved for future reference. 
+            //_mySqlCommand.CommandText = "SELECT * FROM appointment WHERE userID = @userId";
+            //_mySqlCommand.Parameters.AddWithValue("@userId", CurrentSession.Instance.CurrentUser.UserId);
             var mySqlDataReader = _mySqlCommand.ExecuteReader();
             while (mySqlDataReader.Read())
             {
@@ -307,7 +329,7 @@ namespace OwlSchedulerLibrary.OwlDatabase
             DatabaseInformationUpdated?.Invoke(this, new PropertyChangedEventArgs("Appointments Updated!"));
         }
         
-        public bool CustomerHasAppointments(int id)
+        public bool CustomerInAppointments(int id)
         {
             if (!CheckOrOpenConnection()) throw new Exception("Connection Error");
             _mySqlCommand = _mySqlConnection.CreateCommand();
@@ -315,7 +337,52 @@ namespace OwlSchedulerLibrary.OwlDatabase
             _mySqlCommand.Parameters.AddWithValue("@customerId", id);
             var mySqlDataReader = _mySqlCommand.ExecuteReader();
             var hasRows = mySqlDataReader.HasRows; 
-            LogHandler.LogMessage("DatabaseHandler", hasRows ? "Attempted customer delete failed on " + id + ". Customer has appointment in database." : "Customer " + id + " deleted.");
+            LogHandler.LogMessage("DatabaseHandler", hasRows ? "Customer " + id + " has associated appointment in database." : "Customer " + id + " has no associations.");
+            mySqlDataReader.Close();
+            _mySqlCommand.Dispose();
+            CloseConnectionIfOpen();
+            return hasRows;
+        }
+        
+        public bool AddressInCustomer(int id)
+        {
+            if (!CheckOrOpenConnection()) throw new Exception("Connection Error");
+            _mySqlCommand = _mySqlConnection.CreateCommand();
+            _mySqlCommand.CommandText = "SELECT * FROM customer WHERE addressId = @addressId";
+            _mySqlCommand.Parameters.AddWithValue("@addressId", id);
+            var mySqlDataReader = _mySqlCommand.ExecuteReader();
+            var hasRows = mySqlDataReader.HasRows; 
+            LogHandler.LogMessage("DatabaseHandler", hasRows ? "Address " + id + " has associated customer in database." : "Address " + id + " has no associations.");
+            mySqlDataReader.Close();
+            _mySqlCommand.Dispose();
+            CloseConnectionIfOpen();
+            return hasRows;
+        }
+        
+        public bool CityInAddress(int id)
+        {
+            if (!CheckOrOpenConnection()) throw new Exception("Connection Error");
+            _mySqlCommand = _mySqlConnection.CreateCommand();
+            _mySqlCommand.CommandText = "SELECT * FROM address WHERE cityId = @id";
+            _mySqlCommand.Parameters.AddWithValue("@id", id);
+            var mySqlDataReader = _mySqlCommand.ExecuteReader();
+            var hasRows = mySqlDataReader.HasRows; 
+            LogHandler.LogMessage("DatabaseHandler", hasRows ? "City " + id + " has associated address in database." : "City " + id + " has no associations.");
+            mySqlDataReader.Close();
+            _mySqlCommand.Dispose();
+            CloseConnectionIfOpen();
+            return hasRows;
+        }
+        
+        public bool CountryInCity(int id)
+        {
+            if (!CheckOrOpenConnection()) throw new Exception("Connection Error");
+            _mySqlCommand = _mySqlConnection.CreateCommand();
+            _mySqlCommand.CommandText = "SELECT * FROM city WHERE countryId = @id";
+            _mySqlCommand.Parameters.AddWithValue("@id", id);
+            var mySqlDataReader = _mySqlCommand.ExecuteReader();
+            var hasRows = mySqlDataReader.HasRows; 
+            LogHandler.LogMessage("DatabaseHandler", hasRows ? "Country " + id + " has associated city in database." : "Country " + id + " has no associations.");
             mySqlDataReader.Close();
             _mySqlCommand.Dispose();
             CloseConnectionIfOpen();
@@ -324,7 +391,7 @@ namespace OwlSchedulerLibrary.OwlDatabase
         
         #endregion
         
-        #region InsertNewRecords
+        #region NonQuery
 
         public int InsertAddress(Address newAddress)
         {
@@ -340,6 +407,13 @@ namespace OwlSchedulerLibrary.OwlDatabase
             return row;
         }
 
+        public int DeleteAddress(int id)
+        {
+            var row = ExecuteNonQueryReturnRow(_mySqlCommand = DatabaseQueries.GetDeleteAddressCommand(_mySqlConnection.CreateCommand(), id));
+            RefreshAddresses();
+            return row;
+        }
+        
         public int InsertCity(City newCity)
         {
             var row = ExecuteNonQueryReturnRecord(_mySqlCommand = DatabaseQueries.GetInsertCityCommand(_mySqlConnection.CreateCommand(), newCity));
@@ -354,6 +428,13 @@ namespace OwlSchedulerLibrary.OwlDatabase
             return row;
         }
         
+        public int DeleteCity(int id)
+        {
+            var row = ExecuteNonQueryReturnRow(_mySqlCommand = DatabaseQueries.GetDeleteCityCommand(_mySqlConnection.CreateCommand(), id));
+            RefreshCities();
+            return row;
+        }
+        
         public int InsertCountry(Country newCountry)
         {
             var row = ExecuteNonQueryReturnRecord(_mySqlCommand = DatabaseQueries.GetInsertCountryCommand(_mySqlConnection.CreateCommand(), newCountry));
@@ -364,6 +445,13 @@ namespace OwlSchedulerLibrary.OwlDatabase
         public int UpdateCountry(Country newCountry)
         {
             var row = ExecuteNonQueryReturnRecord(_mySqlCommand = DatabaseQueries.GetUpdateCountryCommand(_mySqlConnection.CreateCommand(), newCountry));
+            RefreshCountries();
+            return row;
+        }
+        
+        public int DeleteCountry(int id)
+        {
+            var row = ExecuteNonQueryReturnRow(_mySqlCommand = DatabaseQueries.GetDeleteCountryCommand(_mySqlConnection.CreateCommand(), id));
             RefreshCountries();
             return row;
         }

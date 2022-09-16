@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -34,6 +35,10 @@ namespace Owl_Scheduler_Desktop_Edition.ManageCustomerWindows
         private void WindowCustomer_OnClosing(object sender, CancelEventArgs e)
         {
             e.Cancel = true;
+            _editMode = false;
+            RadioEdit.IsChecked = false;
+            RadioNew.IsChecked = true;
+            ComboAccountPicker.IsEnabled = false;
             ClearAccountInfo();
             Hide();
         }
@@ -56,11 +61,15 @@ namespace Owl_Scheduler_Desktop_Edition.ManageCustomerWindows
             if (!CustomerDataModify.SaveCustomer(newCustomer, out var result))
             {
                 MessageBox.Show(result, "Save Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+                _editMode = false;
+                RadioNew_OnClick(sender,e);
                 ClearAccountInfo();
                 Hide();
                 return;
             }
             MessageBox.Show("Saved!", "Jobs Done!", MessageBoxButton.OK, MessageBoxImage.Information);
+            _editMode = false;
+            RadioNew_OnClick(sender,e);
             ClearAccountInfo();
             Hide();
         }
@@ -81,6 +90,10 @@ namespace Owl_Scheduler_Desktop_Edition.ManageCustomerWindows
 
         private void CancelButton_OnClick(object sender, RoutedEventArgs e)
         {
+            _editMode = false;
+            RadioEdit.IsChecked = false;
+            RadioNew.IsChecked = true;
+            RadioNew_OnClick(sender,e);
             ClearAccountInfo();
             Hide();
         }
@@ -89,7 +102,7 @@ namespace Owl_Scheduler_Desktop_Edition.ManageCustomerWindows
         {
             if (!_editMode) return;
             if (ComboAccountPicker.SelectedIndex == -1) return;
-            var confirm = MessageBox.Show("You are about to delete a record! Are you sure?", "Delete Appointment?", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
+            var confirm = MessageBox.Show("You are about to delete a record! Are you sure?", "Delete Customer?", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
             if (confirm != MessageBoxResult.Yes) return;
             if (CustomerDataModify.DeleteCustomer(((Customer)ComboAccountPicker.SelectedItem).CustomerId, out string result))
             {
@@ -212,6 +225,12 @@ namespace Owl_Scheduler_Desktop_Edition.ManageCustomerWindows
 
         private void RadioEdit_OnClick(object sender, RoutedEventArgs e)
         {
+            if (!ComboAccountPicker.HasItems)
+            {
+                RadioEdit.IsChecked = false;
+                RadioNew_OnClick(sender,e);
+                return;
+            }
             _editMode = true;
             RadioNew.IsChecked = false;
             DeleteButton.IsEnabled = true;
@@ -224,18 +243,27 @@ namespace Owl_Scheduler_Desktop_Edition.ManageCustomerWindows
         {
             _manageAddressWindow.Show();
             _manageAddressWindow.Activate();
+            RadioNew_OnClick(sender,e);
+            ClearAccountInfo();
+            Hide();
         }
 
         private void ButtonManageCity_OnClick(object sender, RoutedEventArgs e)
         {
             _manageCityWindow.Show();
             _manageCityWindow.Activate();
+            RadioNew_OnClick(sender,e);
+            ClearAccountInfo();
+            Hide();
         }
 
         private void ButtonManageCountry_OnClick(object sender, RoutedEventArgs e)
         {
             _manageCountryWindow.Show();
             _manageCountryWindow.Activate();
+            RadioNew_OnClick(sender,e);
+            ClearAccountInfo();
+            Hide();
         }
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Owl_Scheduler_Desktop_Edition"
         mc:Ignorable="d"
-        Title="Owl Scheduler Pro" Height="1080" Width="1920" FontSize="20" Closing="MainWindow_OnClosing">
+        Title="Owl Scheduler Pro" Height="1080" Width="1920" FontSize="20" Closing="MainWindow_OnClosing" ResizeMode="NoResize">
     <Grid>
         <Grid x:Name="PrimaryGrid" Visibility="Visible">
             <Grid.ColumnDefinitions>
@@ -44,11 +44,14 @@
                     <ListView x:Name="AppointmentsAll" Height="800px">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Begins" DisplayMemberBinding="{Binding Path=StartDateTime, StringFormat='g'}" Width="260px" ></GridViewColumn>
-                                <GridViewColumn Header="Ends" DisplayMemberBinding="{Binding Path=EndDateTime, StringFormat='g'}" Width="260px"></GridViewColumn>
-                                <GridViewColumn Header="Title" DisplayMemberBinding="{Binding Path=Title}" Width="260px"></GridViewColumn>
-                                <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Path=Description}" Width="260px"></GridViewColumn>
-                                <GridViewColumn Header="Location" DisplayMemberBinding="{Binding Path=Location}" Width="260px"></GridViewColumn>
+                                <GridViewColumn Header="Begins" DisplayMemberBinding="{Binding Path=StartDateTime, StringFormat='MM/dd/yy H:mm'}" Width="150px" ></GridViewColumn>
+                                <GridViewColumn Header="Ends" DisplayMemberBinding="{Binding Path=EndDateTime, StringFormat='MM/dd/yy H:mm'}" Width="150px"></GridViewColumn>
+                                <GridViewColumn Header="Title" DisplayMemberBinding="{Binding Path=Title}" Width="150px"></GridViewColumn>
+                                <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Path=Description}" Width="250px"></GridViewColumn>
+                                <GridViewColumn Header="Location" DisplayMemberBinding="{Binding Path=Location}" Width="150px"></GridViewColumn>
+                                <GridViewColumn Header="Contact" DisplayMemberBinding="{Binding Path=Contact}" Width="125px"></GridViewColumn>
+                                <GridViewColumn Header="Type" DisplayMemberBinding="{Binding Path=Type}" Width="150px"></GridViewColumn>
+                                <GridViewColumn Header="Url" DisplayMemberBinding="{Binding Path=Url}" Width="125px"></GridViewColumn>
                             </GridView>
                         </ListView.View>
                     </ListView>

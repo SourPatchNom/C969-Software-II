@@ -75,6 +75,18 @@
         <Compile Include="ManageCustomerWindows\ManageCustomerWindow.xaml.cs">
           <DependentUpon>ManageCustomerWindow.xaml</DependentUpon>
         </Compile>
+        <Compile Include="ReportingWindows\ConsultantScheduleWindow.xaml.cs">
+          <DependentUpon>ConsultantScheduleWindow.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="ReportingWindows\CustomReportWindow.xaml.cs">
+          <DependentUpon>CustomReportWindow.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="ReportingWindows\ReportsWindow.xaml.cs">
+          <DependentUpon>ReportsWindow.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="ReportingWindows\TypesByMonthWindow.xaml.cs">
+          <DependentUpon>TypesByMonthWindow.xaml</DependentUpon>
+        </Compile>
         <Compile Include="WindowUserLogin.xaml.cs">
           <DependentUpon>WindowUserLogin.xaml</DependentUpon>
         </Compile>
@@ -95,6 +107,10 @@
         <Page Include="ManageCustomerWindows\ManageCityWindow.xaml" />
         <Page Include="ManageCustomerWindows\ManageCountryWindow.xaml" />
         <Page Include="ManageCustomerWindows\ManageCustomerWindow.xaml" />
+        <Page Include="ReportingWindows\ConsultantScheduleWindow.xaml" />
+        <Page Include="ReportingWindows\CustomReportWindow.xaml" />
+        <Page Include="ReportingWindows\ReportsWindow.xaml" />
+        <Page Include="ReportingWindows\TypesByMonthWindow.xaml" />
         <Page Include="WindowUserLogin.xaml" />
     </ItemGroup>
     <ItemGroup>

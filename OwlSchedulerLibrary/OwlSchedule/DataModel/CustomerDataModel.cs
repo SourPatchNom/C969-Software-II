@@ -13,7 +13,7 @@ namespace OwlSchedulerLibrary.OwlSchedule.DataModel
         public readonly BindingList<City> Cities = new BindingList<City>();
         public readonly BindingList<Country> Countries = new BindingList<Country>();
 
-        public CustomerDataModel()
+        internal CustomerDataModel()
         {
             UpdateCountries();
             UpdateCities();
@@ -29,6 +29,12 @@ namespace OwlSchedulerLibrary.OwlSchedule.DataModel
             UpdateCustomers();
         }
 
+        /// <summary>
+        /// Updates the master list of appointments for the current user.
+        /// TODO ASSIGNMENT COMMENT This is an exceptional example of the benefits of lambda expressions eliminating lengthy code.
+        /// TODO Here we use lambda expressions to order countries by their name and add them to the countries master BindingList.
+        /// TODO I chose lambda expressions over traditional code due to the fact that it reduced multiple lines, additional functions, and potential bug issues. 
+        /// </summary>
         private void UpdateCountries()
         {
             Countries.Clear();
