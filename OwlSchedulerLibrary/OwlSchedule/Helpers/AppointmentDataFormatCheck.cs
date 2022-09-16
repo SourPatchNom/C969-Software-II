@@ -5,7 +5,7 @@ namespace OwlSchedulerLibrary.OwlSchedule.Helpers
 {
     public static class AppointmentDataFormatCheck
     {
-        public static bool CheckAppointmentDateTime(DateTime start, DateTime end, out string result)
+        public static bool CheckAppointmentDateTime(DateTime start, DateTime end, int recordId, out string result)
         {
             result = "";
 
@@ -17,7 +17,7 @@ namespace OwlSchedulerLibrary.OwlSchedule.Helpers
             }
             
             //Overlap 
-            if (OwlScheduler.Instance.AppointmentDataModel.CurrentUserAppointmentsMaster.Any(x => x.StartDateTime < end && start < x.EndDateTime))
+            if (OwlScheduler.Instance.AppointmentDataModel.CurrentUserAppointmentsMaster.Any(x => x.StartDateTime < end && start < x.EndDateTime && x.AppointmentId != recordId))
             {
                 result = "An appointment is already booked at that time!";
                 return false;

@@ -170,7 +170,10 @@ namespace Owl_Scheduler_Desktop_Edition.ManageCustomerWindows
 
         private void DeleteButton_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            if (CustomerDataModify.DeleteCustomer(((Customer)ComboAccountPicker.SelectedItem).CustomerId, out string result))
+            {
+                //TODO pickup here
+            }
         }
 
         private void RadioNew_OnClick(object sender, RoutedEventArgs e)

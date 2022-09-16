@@ -7,7 +7,7 @@ namespace OwlSchedulerLibrary.OwlSchedule.DataModel
     public static class CustomerDataModify
     {
 
-        public static bool SaveCustomer(Customer newCustomer, out string s)
+        public static bool SaveCustomer(Customer newCustomer, out string result)
         {
             try
             {
@@ -15,24 +15,43 @@ namespace OwlSchedulerLibrary.OwlSchedule.DataModel
                 {
                     if (DatabaseHandler.Instance.InsertCustomer(newCustomer) != -1)
                     {
-                        s = "Success!";
+                        result = "Success!";
                         return true;
                     }
-                    s = "Failed to insert new address!";
+                    result = "Failed to insert new address!";
                     return false;    
                 }
                 if (DatabaseHandler.Instance.UpdateCustomer(newCustomer) != -1)
                 {
-                    s = "Success!";
+                    result = "Success!";
                     return true;
                 }
-                s = "Failed to update address!";
+                result = "Failed to update address!";
                 return false;
                 
             }
             catch (Exception e)
             {
-                s = e.Message;
+                result = e.Message;
+                throw;
+            }
+        }
+
+        public static bool DeleteCustomer(int id, out string result)
+        {
+            try
+            {
+                if (DatabaseHandler.Instance.DeleteCustomer(id) == 1)
+                {
+                    result = "Success!";
+                    return true;
+                }
+                result = "Failed to delete customer!";
+                return false;   
+            }
+            catch (Exception e)
+            {
+                result = e.Message;
                 throw;
             }
         }

@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:Owl_Scheduler_Desktop_Edition"
         mc:Ignorable="d"
-        Title="WindowAppointment" Height="1000" Width="1000" FontSize="20" Deactivated="WindowAppointment_OnDeactivated" Closing="WindowAppointment_OnClosing">
+        Title="WindowAppointment" Height="1000" Width="1000" FontSize="20" Closing="WindowAppointment_OnClosing">
 <Grid>
         <Label HorizontalAlignment="Center" Content="Appointment Manager"/>
         <Label HorizontalAlignment="Center" x:Name="LabelErrors" Content="Errors" Margin="0,30,0,0" Visibility="Hidden" Foreground="Firebrick"/>

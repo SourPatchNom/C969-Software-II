@@ -24,11 +24,10 @@ namespace Owl_Scheduler_Desktop_Edition
         private readonly DispatcherTimer _timer = new DispatcherTimer();
         private bool _nextTimerAlert = true;
         
-        //private List<Appointment> AppointmentsAll => OwlScheduler.Instance.CurrentUserAppointmentsMaster;
-
         public MainWindow()
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            
             InitializeComponent();
             LogHandler.LogMessage("Main Window", "Initialized.");
             OwlScheduler.Instance.Initialize();
@@ -70,6 +69,7 @@ namespace Owl_Scheduler_Desktop_Edition
             if (CurrentSession.Instance.IsLoggedIn)
             {
                 Show();
+                Activate();
                 LabelWelcome.Content = "Hello " + CurrentSession.Instance.CurrentUser?.UserName;
                 return;
             }
@@ -131,8 +131,7 @@ namespace Owl_Scheduler_Desktop_Edition
 
         private void ButtonSettings_OnClick(object sender, RoutedEventArgs e)
         {
-            DatabaseHandler.Instance.InsertAppointment(new Appointment(-1,1,1,"Button","This is a test generated appt","Home","Bob","In Person","",DateTime.UtcNow.Add(new TimeSpan(0,2,2)), DateTime.UtcNow.Add(new TimeSpan(0,22,2)), DateTime.UtcNow, "Admin", DateTime.UtcNow, "Admin"));
-            //DatabaseHandler.Instance.RefreshAppointments();
+            MessageBox.Show("Thank for reviewing my application!");
         }
 
         private void MainWindow_OnClosing(object sender, CancelEventArgs e)
@@ -148,6 +147,11 @@ namespace Owl_Scheduler_Desktop_Edition
         private void ButtonAppointments_OnClick(object sender, RoutedEventArgs e)
         {
             _manageAppointmentWindow.Show();
+        }
+
+        private void ButtonReports_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }

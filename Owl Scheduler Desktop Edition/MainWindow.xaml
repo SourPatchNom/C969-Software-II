@@ -29,6 +29,8 @@
                 <Button HorizontalAlignment="Center" Width="200" Height="50" Content="View Week" Click="ButtonViewByWeek_OnClick" Padding="0,0,0,0" />
                 <Line Height="50" />
                 <Label Content="Admin" HorizontalAlignment="Center" Padding="10"/>
+                <Button HorizontalAlignment="Center" Width="200" Height="50" Content="Reports" Click="ButtonReports_OnClick" Padding="0,0,0,0" />
+                <Line Height="25" />
                 <Button HorizontalAlignment="Center" Width="200" Height="50" Content="Settings" Click="ButtonSettings_OnClick" Padding="0,0,0,0" />
                 <Line Height="25" />
                 <Button HorizontalAlignment="Center" Width="200" Height="50" Content="Log Out" Click="ButtonLogOut_OnClick" Padding="0,0,0,0" />
@@ -53,9 +55,9 @@
                 </Grid>
             </StackPanel>
             <StackPanel Grid.Column="2" Margin="10">
-                <Label x:Name="LabelNextApptTime" HorizontalAlignment="Center" Content="Next Appointment:" Padding="10,10,0,10"/>
+                <Label x:Name="LabelNextApptTime" HorizontalAlignment="Center" Content="Time" Padding="10,10,0,10"/>
                 <Line Height="10" />
-                <Label HorizontalAlignment="Center" Content="Today's Appointments" Padding="10,10,0,10"/>
+                <Label HorizontalAlignment="Center" Content="Pending Today" Padding="10,10,0,10"/>
                 <Line Height="10" />
                 <Grid>
                     <ListView x:Name="TodayDataGrid" Height="800px" Padding="10">

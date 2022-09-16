@@ -1,4 +1,5 @@
-﻿using OwlSchedulerLibrary.OwlDatabase;
+﻿using System;
+using OwlSchedulerLibrary.OwlDatabase;
 using OwlSchedulerLibrary.OwlSchedule.Classes;
 
 namespace OwlSchedulerLibrary.OwlSchedule.DataModel
@@ -28,6 +29,25 @@ namespace OwlSchedulerLibrary.OwlSchedule.DataModel
             }
             result = "Appointment updated in database!";
             return true;
+        }
+        
+        public static bool DeleteAppointment(int id, out string result)
+        {
+            try
+            {
+                if (DatabaseHandler.Instance.DeleteAppointment(id) == 1)
+                {
+                    result = "Success!";
+                    return true;
+                }
+                result = "Failed to delete appointment!";
+                return false;   
+            }
+            catch (Exception e)
+            {
+                result = e.Message;
+                throw;
+            }
         }
     }
 }

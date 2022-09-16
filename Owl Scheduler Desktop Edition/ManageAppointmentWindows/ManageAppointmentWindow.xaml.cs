@@ -35,12 +35,6 @@ namespace Owl_Scheduler_Desktop_Edition.ManageAppointmentWindows
             Hide();
         }
 
-        private void WindowAppointment_OnDeactivated(object sender, EventArgs e)
-        {
-            ClearFieldInfo();
-            Hide();
-        }
-
         private void WindowAppointment_OnClosing(object sender, CancelEventArgs e)
         {
             e.Cancel = true;
@@ -57,6 +51,11 @@ namespace Owl_Scheduler_Desktop_Edition.ManageAppointmentWindows
                 ((Customer)ComboCustomerPicker.SelectedItem).CustomerId, CurrentSession.Instance.CurrentUser.UserId, TextBoxTitle.Text, TextBoxDescription.Text, TextBoxLocation.Text,
                 TextBoxContact.Text, TextBoxType.Text, TextBoxUrl.Text, start, end, DateTime.Now, CurrentSession.Instance.CurrentUser.UserName, DateTime.Now, CurrentSession.Instance.CurrentUser.UserName), out string result);
             MessageBox.Show(saved ? "Saved!" : "Unable to save!\n" + result, "Save Appointment", MessageBoxButton.OK, saved ? MessageBoxImage.Information : MessageBoxImage.Error);
+            RadioEdit.IsChecked = false;
+            RadioNew.IsChecked = true;
+            RadioNew_OnClick(sender,e);
+            ClearFieldInfo();
+            Hide();
         }
 
         private void CancelButton_OnClick(object sender, RoutedEventArgs e)
@@ -67,7 +66,46 @@ namespace Owl_Scheduler_Desktop_Edition.ManageAppointmentWindows
 
         private void DeleteButton_OnClick(object sender, RoutedEventArgs e)
         {
-            if (_editMode) return;
+            if (!_editMode) return;
+            if (ComboAppointmentPicker.SelectedIndex == -1) return;
+            var confirm = MessageBox.Show("You are about to delete a record! Are you sure?", "Delete Appointment?", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
+            if (confirm != MessageBoxResult.Yes) return;
+            if (OwlSchedulerLibrary.OwlSchedule.DataModel.AppointmentDataModify.DeleteAppointment(((Appointment)ComboAppointmentPicker.SelectedItem).AppointmentId, out var result))
+            {
+                MessageBox.Show("Record deleted!\n" + result, "Delete Appointment", MessageBoxButton.OK, MessageBoxImage.Information);
+                if (!ComboAppointmentPicker.HasItems) 
+                {
+                    RadioEdit.IsChecked = false;
+                    RadioNew.IsChecked = true;
+                    RadioNew_OnClick(sender,e);
+                    ClearFieldInfo();
+                    return;
+                }
+                ComboAppointmentPicker.SelectedIndex = 0;
+                PopulateFieldInfo();
+                return;
+            }
+            MessageBox.Show(this, "Record delete failed!\n" + result, "Delete Appointment", MessageBoxButton.OK, MessageBoxImage.Error);
+            ClearFieldInfo();
+            Hide();
+        }
+
+        private void PopulateFieldInfo()
+        {
+            if (ComboAppointmentPicker.SelectedIndex == -1) return;
+            var appointment = (Appointment)ComboAppointmentPicker.SelectedItem;
+            ComboCustomerPicker.SelectedItem = OwlScheduler.Instance.CustomerDataModel.Customers.First(x => x.CustomerId == appointment.CustomerId);
+            TextBoxTitle.Text = appointment.Title;
+            TextBoxDescription.Text = appointment.Description;
+            TextBoxLocation.Text = appointment.Location;
+            TextBoxContact.Text = appointment.Contact;
+            TextBoxType.Text = appointment.Type;
+            TextBoxUrl.Text = appointment.Url;
+            DatePickerStart.SelectedDate = appointment.StartDateTime.Date;
+            ComboBoxStartHour.SelectedItem = appointment.StartDateTime.Hour;
+            ComboBoxStartMinute.SelectedItem = appointment.StartDateTime.Minute;
+            ComboBoxDurationHour.SelectedItem = appointment.EndDateTime.Hour - appointment.StartDateTime.Hour;
+            ComboBoxDurationMinute.SelectedItem = appointment.EndDateTime.Minute - appointment.StartDateTime.Minute;
         }
         
         private void ClearFieldInfo()
@@ -99,16 +137,24 @@ namespace Owl_Scheduler_Desktop_Edition.ManageAppointmentWindows
 
         private void RadioEdit_OnClick(object sender, RoutedEventArgs e)
         {
+            if (!ComboAppointmentPicker.HasItems)
+            {
+                MessageBox.Show("No appointments exist to edit!", "Can't edit!", MessageBoxButton.OK, MessageBoxImage.Information);
+                RadioNew.IsChecked = true;
+                RadioNew_OnClick(sender,e);
+                return;
+            }
             _editMode = true;
             ComboAppointmentPicker.IsEnabled = true;
-            ComboAppointmentPicker.SelectedIndex = 0;
             RadioNew.IsChecked = false;
             DeleteButton.IsEnabled = true;
-            ClearFieldInfo();
+            ComboAppointmentPicker.SelectedIndex = 0;
+            PopulateFieldInfo();
         }
 
         private void ComboAppointmentPicker_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            PopulateFieldInfo();
             CheckIfFormComplete();
         }
 
@@ -188,7 +234,7 @@ namespace Owl_Scheduler_Desktop_Edition.ManageAppointmentWindows
             if (ComboCustomerPicker.SelectedIndex == -1)
             {
                 LabelErrors.Visibility = Visibility.Visible;
-                LabelErrors.Content = "Select a customer record to edit!";
+                LabelErrors.Content = "Select an associated customer!";
                 ToggleSaveButton(false);
                 return;
             }
@@ -196,7 +242,7 @@ namespace Owl_Scheduler_Desktop_Edition.ManageAppointmentWindows
             if (TextBoxTitle.Text == "" || TextBoxDescription.Text == "" || TextBoxLocation.Text == "" || TextBoxContact.Text == "" || TextBoxContact.Text == "" || TextBoxType.Text == "" || TextBoxUrl.Text == "")
             {
                 LabelErrors.Visibility = Visibility.Visible;
-                LabelErrors.Content = "No text in required field!";
+                LabelErrors.Content = "Missing text in required field!";
                 ToggleSaveButton(false);
                 return;
             }
@@ -249,7 +295,7 @@ namespace Owl_Scheduler_Desktop_Edition.ManageAppointmentWindows
             
             DateTime start = DatePickerStart.SelectedDate.Value.AddHours((int)ComboBoxStartHour.SelectedItem).AddMinutes((int)ComboBoxStartMinute.SelectedItem);
             DateTime end = start.AddHours((int)ComboBoxDurationHour.SelectedItem).AddMinutes((int)ComboBoxDurationMinute.SelectedItem);
-            if (!AppointmentDataFormatCheck.CheckAppointmentDateTime(start, end, out result))
+            if (!AppointmentDataFormatCheck.CheckAppointmentDateTime(start, end, _editMode? ((Appointment)ComboAppointmentPicker.SelectedItem).AppointmentId : -1, out result))
             {
                 return false;
             }
