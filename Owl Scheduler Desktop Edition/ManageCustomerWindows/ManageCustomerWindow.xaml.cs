@@ -80,7 +80,7 @@ namespace Owl_Scheduler_Desktop_Edition.ManageCustomerWindows
             if (_editMode)
             {
                 var oldCustomer = ((Customer)ComboAccountPicker.SelectedItem);
-                return new Customer(oldCustomer.CustomerId, TextBoxName.Text, oldCustomer.CustomerAddress, ComboStatusPicker.SelectedIndex == 0, oldCustomer.CreateDateTime, 
+                return new Customer(oldCustomer.CustomerId, TextBoxName.Text, ((Address)ComboAddressPicker.SelectedItem).AddressId, ComboStatusPicker.SelectedIndex == 0, oldCustomer.CreateDateTime, 
                     oldCustomer.CreateBy, DateTime.Now, CurrentSession.Instance.CurrentUser.UserName);
             }
 
