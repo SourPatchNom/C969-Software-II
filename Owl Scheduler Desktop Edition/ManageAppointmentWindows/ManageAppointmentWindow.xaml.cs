@@ -25,9 +25,13 @@ namespace Owl_Scheduler_Desktop_Edition.ManageAppointmentWindows
             ComboCustomerPicker.MaxDropDownHeight = 200;
             DatePickerStart.BlackoutDates.Add(new CalendarDateRange(DateTime.MinValue, DateTime.Now - TimeSpan.FromDays(1)));
             ComboBoxStartHour.ItemsSource =  Enumerable.Range(OwlScheduler.BusinessHourOpen, OwlScheduler.BusinessHourClose - OwlScheduler.BusinessHourOpen);
+            ComboBoxStartHour.MaxDropDownHeight = 100;
             ComboBoxStartMinute.ItemsSource = Enumerable.Range(0, 60);
+            ComboBoxStartMinute.MaxDropDownHeight = 100;
             ComboBoxDurationHour.ItemsSource = Enumerable.Range(0, 8);
+            ComboBoxDurationHour.MaxDropDownHeight = 100;
             ComboBoxDurationMinute.ItemsSource = Enumerable.Range(0, 60);
+            ComboBoxDurationMinute.MaxDropDownHeight = 100;
         }
 
         private void LoginOnPropertyChanged(object sender, PropertyChangedEventArgs e)
