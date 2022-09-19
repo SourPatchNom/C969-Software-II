@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Owl_Scheduler_Desktop_Edition"
         mc:Ignorable="d"
-        Title="Owl Scheduler Pro" Height="1080" Width="1920" FontSize="20" Closing="MainWindow_OnClosing" ResizeMode="NoResize">
+        Title="Owl Scheduler Pro" Height="1000" Width="1920" FontSize="20" Closing="MainWindow_OnClosing" ResizeMode="NoResize">
     <Grid>
         <Grid x:Name="PrimaryGrid" Visibility="Visible">
             <Grid.ColumnDefinitions>
