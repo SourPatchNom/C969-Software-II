@@ -71,7 +71,7 @@
                         <ColumnDefinition Width="6*"/>
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0" Content="Hour" HorizontalAlignment="Right"/>
-                    <ComboBox Grid.Column="1" x:Name="ComboBoxDurationHour" Width="70px" HorizontalAlignment="Left" Margin="0,5,0,0" SelectionChanged="ComboBoxDurationHour_OnSelectionChanged"/>
+                    <ComboBox Grid.Column="1" x:Name="ComboBoxDurationHour"  Width="70px" HorizontalAlignment="Left" Margin="0,5,0,0" SelectionChanged="ComboBoxDurationHour_OnSelectionChanged"/>
                     <Label Grid.Column="2" Content="Minute" HorizontalAlignment="Right"/>
                     <ComboBox Grid.Column="3" x:Name="ComboBoxDurationMinute" Width="70px" HorizontalAlignment="Left" Margin="0,5,0,0" SelectionChanged="ComboBoxDurationMinute_OnSelectionChanged"/>
                 </Grid>

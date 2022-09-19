@@ -18,7 +18,9 @@ namespace Owl_Scheduler_Desktop_Edition.ManageCustomerWindows
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
             ComboCityPicker.ItemsSource = OwlScheduler.Instance.CustomerDataModel.Cities;
+            ComboCityPicker.MaxDropDownHeight = 200;
             ComboBoxCountryPicker.ItemsSource = OwlScheduler.Instance.CustomerDataModel.Countries;
+            ComboBoxCountryPicker.MaxDropDownHeight = 200;
         }
 
         private void ManageCityWindow_OnClosing(object sender, CancelEventArgs e)

@@ -24,7 +24,9 @@ namespace Owl_Scheduler_Desktop_Edition.ManageCustomerWindows
             InitializeComponent();
             CurrentSession.Instance.PropertyChanged += LoginOnPropertyChanged;
             ComboAccountPicker.ItemsSource = OwlScheduler.Instance.CustomerDataModel.Customers;
+            ComboAccountPicker.MaxDropDownHeight = 200;
             ComboAddressPicker.ItemsSource = OwlScheduler.Instance.CustomerDataModel.Addresses;
+            ComboAddressPicker.MaxDropDownHeight = 200;
         }
 
         private void LoginOnPropertyChanged(object sender, PropertyChangedEventArgs e)

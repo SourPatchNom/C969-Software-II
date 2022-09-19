@@ -17,6 +17,7 @@ namespace Owl_Scheduler_Desktop_Edition.ManageCustomerWindows
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
             ComboCountryPicker.ItemsSource = OwlScheduler.Instance.CustomerDataModel.Countries;
+            ComboCountryPicker.MaxDropDownHeight = 200;
         }
 
         private void RadioNew_OnClick(object sender, RoutedEventArgs e)
