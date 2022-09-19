@@ -160,7 +160,8 @@ namespace Owl_Scheduler_Desktop_Edition.ManageCustomerWindows
 
         private void SaveButton_OnClick(object sender, RoutedEventArgs e)
         {
-            var newAddress = new Address(_editMode ? ((Address)ComboAddressPicker.SelectedItem).CityId : -1, TextBoxAddressLineOne.Text, TextBoxAddressLineTwo.Text , ((City)ComboBoxCityPicker.SelectedItem).CityId, TextBoxPostalLine.Text, TextBoxPhone.Text, DateTime.Now, CurrentSession.Instance.CurrentUser.UserName, DateTime.Now,
+            var newAddress = new Address(_editMode ? ((Address)ComboAddressPicker.SelectedItem).AddressId : -1, TextBoxAddressLineOne.Text, TextBoxAddressLineTwo.Text, 
+                ((City)ComboBoxCityPicker.SelectedItem).CityId, TextBoxPostalLine.Text, TextBoxPhone.Text, DateTime.Now, CurrentSession.Instance.CurrentUser.UserName, DateTime.Now,
                 CurrentSession.Instance.CurrentUser.UserName);
 
             if (!CustomerDataModify.SaveAddress(newAddress, out var result))
