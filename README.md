@@ -1,6 +1,6 @@
 # C969-Software-II
 
-This was my passing submission for the C969 Software II course! Was fun to build and have reviewed!
+This was my passing submission for the C969 Software II course! Was fun to build and have reviewed! I have since graduated so I though I would open-source this! If you're looking at this and are a student, good luck, you got this!
 
 # License
 
