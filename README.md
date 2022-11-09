@@ -1,6 +1,6 @@
 # C969-Software-II
 
-This was a submitted and accepted assignment for the C969 Software II course!
+This was my passing submission for the C969 Software II course! Was fun to build and have reviewed!
 
 # License
 
