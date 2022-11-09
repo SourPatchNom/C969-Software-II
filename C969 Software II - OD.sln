@@ -1,10 +1,10 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Owl Scheduler Desktop Edition", "Owl Scheduler Desktop Edition\Owl Scheduler Desktop Edition.csproj", "{661FE6DB-ECC8-483F-B6B1-DA0D650F6921}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Owl Scheduler Desktop Edition", "src\Owl Scheduler Desktop Edition\Owl Scheduler Desktop Edition.csproj", "{661FE6DB-ECC8-483F-B6B1-DA0D650F6921}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwlSchedulerLibrary", "OwlSchedulerLibrary\OwlSchedulerLibrary.csproj", "{74B721DF-83C1-4159-9E9B-484817178981}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwlSchedulerLibrary", "src\OwlSchedulerLibrary\OwlSchedulerLibrary.csproj", "{74B721DF-83C1-4159-9E9B-484817178981}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwlSchedulerTest", "OwlSchedulerTest\OwlSchedulerTest.csproj", "{5C9497A5-F030-4F94-9FC0-2F0580F0E738}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwlSchedulerTest", "src\OwlSchedulerTest\OwlSchedulerTest.csproj", "{5C9497A5-F030-4F94-9FC0-2F0580F0E738}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
