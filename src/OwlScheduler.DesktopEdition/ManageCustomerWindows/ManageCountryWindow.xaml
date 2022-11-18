@@ -1,0 +1,44 @@
+﻿<Window x:Class="OwlScheduler.DesktopEdition.ManageCustomerWindows.ManageCountryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:OwlScheduler.DesktopEdition.ManageCustomerWindows"
+        mc:Ignorable="d"
+        Title="ManageCountryWindow" Height="400" Width="800" Closing="ManageCountryWindow_OnClosing" ResizeMode="NoResize">
+    <Grid>
+        <Label HorizontalAlignment="Center" Content="Country Manager"/>
+        <Label HorizontalAlignment="Center" x:Name="LabelErrors" Content="Errors" Margin="0,30,0,0" Visibility="Hidden" Foreground="Firebrick"/>
+        <Grid Margin="0,90,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="3*" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Margin="50,10,10,0">
+                <Label Content="Edit Type:" HorizontalAlignment="Right" Margin="0,10,0, 0"/>
+                <Label Content="Country:" HorizontalAlignment="Right" Margin="0,25,0, 0"/>
+                <Label Content="Country Name:" HorizontalAlignment="Right" Margin="0,25,0, 0"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Margin="10,10,50,0">
+                <Grid Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="6*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Content="New" HorizontalAlignment="Right"/>
+                    <Viewbox Grid.Column="1" Height="20px" HorizontalAlignment="Left" Margin="10,0,0,0"><RadioButton x:Name="RadioNew" IsChecked="True" Click="RadioNew_OnClick"/></Viewbox>
+                    <Label Grid.Column="2" Content="Edit" HorizontalAlignment="Right"/>
+                    <Viewbox Grid.Column="3" Height="20px" HorizontalAlignment="Left" Margin="10,0,0,0"><RadioButton x:Name="RadioEdit" Click="RadioEdit_OnClick"/></Viewbox>
+                </Grid>
+
+                <ComboBox x:Name="ComboCountryPicker" Margin="0,25,0, 0" DisplayMemberPath="CountryName" SelectionChanged="ComboCountryPicker_OnSelectionChanged" IsEnabled="False"/>
+                <TextBox x:Name="TextBoxCountryName" Margin="0,25,0, 0" Height="30" TextChanged="TextBoxCountryName_OnTextChanged" />
+            </StackPanel>
+        </Grid>
+        <Button Height="50" Width="100" x:Name="SaveButton" Click="SaveButton_OnClick" IsEnabled="False" Content="Save" VerticalAlignment="Bottom" Margin="0,0,250,50"/>
+        <Button Height="50" Width="100" x:Name="CancelButton" Click="CancelButton_OnClick" Content="Cancel" VerticalAlignment="Bottom" Margin="0,0,0,50"/>
+        <Button Height="50" Width="100" x:Name="DeleteButton" Click="DeleteButton_OnClick" Content="Delete" VerticalAlignment="Bottom" Margin="250,0,0,50" IsEnabled="False"/>
+    </Grid>
+</Window>
